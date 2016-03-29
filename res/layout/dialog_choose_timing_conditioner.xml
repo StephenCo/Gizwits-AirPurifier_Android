@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1" >
 
-        <com.gizwits.framework.widget.WheelView
+        <com.future.framework.widget.WheelView
             android:id="@+id/wheel_view_timing"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

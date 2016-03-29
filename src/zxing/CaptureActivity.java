@@ -41,9 +41,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.gizwits.airpurifier.R;
-import com.gizwits.framework.activity.BaseActivity;
-import com.gizwits.framework.activity.device.DeviceListActivity;
+import com.future.airpurifier.R;
+import com.future.framework.activity.BaseActivity;
+import com.future.framework.activity.device.DeviceListActivity;
 import com.google.zxing.Result;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.ui.utils.ToastUtils;

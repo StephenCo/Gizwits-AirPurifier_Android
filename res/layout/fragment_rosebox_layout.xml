@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:layout_centerInParent="true" >
 
-        <com.gizwits.framework.views.RoseBoxSeekBarView
+        <com.future.framework.views.RoseBoxSeekBarView
             android:id="@+id/roseCircleSeekbar"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />    </FrameLayout>
