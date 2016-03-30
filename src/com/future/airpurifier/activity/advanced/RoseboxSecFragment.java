@@ -20,7 +20,7 @@ import com.future.framework.views.RoseBoxSeekBarView;
  * @author hao
  * 
  */
-public class RoseboxFragment extends Fragment implements OnClickListener {
+public class RoseboxSecFragment extends Fragment implements OnClickListener {
 	private AdvancedActivity advancedActivity;
 	
 	private Dialog resetDialog;
@@ -48,7 +48,7 @@ public class RoseboxFragment extends Fragment implements OnClickListener {
 				});
 	}
 
-	public RoseboxFragment(AdvancedActivity activity) {
+	public RoseboxSecFragment(AdvancedActivity activity) {
 		// TODO Auto-generated constructor stub
 		advancedActivity = activity;
 	}
@@ -56,7 +56,7 @@ public class RoseboxFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_rosebox_layout, null);
+		View v = inflater.inflate(R.layout.fragment_roseboxsec_layout, null);
 		mRoseBoxSeekBarView = (RoseBoxSeekBarView) v.findViewById(R.id.roseCircleSeekbar);
 		tvStatu = (TextView) v.findViewById(R.id.statues);
 		btnReset = (Button) v.findViewById(R.id.reset_btn);
@@ -70,7 +70,7 @@ public class RoseboxFragment extends Fragment implements OnClickListener {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						advancedActivity.resetRoseboxSec();
+						advancedActivity.resetRosebox();
 						dialog.dismiss();
 					}
 				});

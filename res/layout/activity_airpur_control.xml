@@ -253,7 +253,7 @@
                                 android:id="@+id/pm25_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="90"
+                                android:text="0"
                                 android:textColor="@color/white" />
                         </LinearLayout>
 
@@ -262,6 +262,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:orientation="vertical" >
 
                             <TextView
@@ -495,6 +496,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
+                android:layout_below="@id/rlHeader"
                 android:visibility="gone" >
 
                 <Button
@@ -525,6 +527,7 @@
                         android:layout_marginTop="15dp"
                         android:background="@drawable/alarm"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:orientation="vertical" >
 
                         <ImageView

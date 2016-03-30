@@ -68,6 +68,10 @@ public class JsonKeys {
      */
     public final static String Filter_Life = "Filter_Life";
     /**
+     * 滤网寿命2
+     */
+    public final static String Filter_Life2 = "Filter_Life2";
+    /**
      * 空气检测灵敏度
      */
     public final static String Air_Sensitivity = "Air_Sensitivity";

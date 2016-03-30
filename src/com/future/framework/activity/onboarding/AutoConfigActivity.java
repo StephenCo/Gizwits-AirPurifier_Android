@@ -142,6 +142,7 @@ public class AutoConfigActivity extends BaseActivity implements OnClickListener 
 	 */
 	private void initViews() {
 		sp_mode = (Spinner) findViewById(R.id.sp_mode);
+		mode_temp=0;
 		//
 		tvSsid = (TextView) findViewById(R.id.tvSsid);
 		etInputPsw = (EditText) findViewById(R.id.etInputPsw);
@@ -166,19 +167,6 @@ public class AutoConfigActivity extends BaseActivity implements OnClickListener 
 					etInputPsw.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 				}
 
-			}
-		});
-		sp_mode.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				mode_temp=position;
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				
 			}
 		});
 	}

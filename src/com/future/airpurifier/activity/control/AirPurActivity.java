@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +34,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.future.airpurifier.R;
 import com.future.airpurifier.activity.advanced.AdvancedActivity;
@@ -45,6 +45,7 @@ import com.future.framework.activity.device.DeviceManageListActivity;
 import com.future.framework.activity.help.AboutActivity;
 import com.future.framework.activity.help.HelpActivity;
 import com.future.framework.adapter.MenuDeviceAdapter;
+import com.future.framework.config.Configs;
 import com.future.framework.config.JsonKeys;
 import com.future.framework.entity.AdvanceType;
 import com.future.framework.entity.DeviceAlarm;
@@ -52,8 +53,8 @@ import com.future.framework.utils.DensityUtil;
 import com.future.framework.utils.DialogManager;
 import com.future.framework.utils.DialogManager.OnTimingChosenListener;
 import com.future.framework.utils.PxUtil;
-import com.future.framework.webservice.GetPMService;
-import com.future.framework.webservice.LocationService;
+import com.future.framework.utils.StringUtils;
+import com.future.framework.webservice.WeatherService;
 import com.future.framework.widget.AboutVersionActivity;
 import com.future.framework.widget.SlidingMenu;
 import com.future.framework.widget.SlidingMenu.SlidingMenuListener;
@@ -184,6 +185,8 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 		 * The login timeout.
 		 */
 		LOGIN_TIMEOUT,
+		
+		GET_WEATHER,
 	}
 
 	@Override
@@ -191,7 +194,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_airpur_control);
 		initUI();
-		initCity();
+		getPm();
 		statuMap = new ConcurrentHashMap<String, Object>();// 设备状态数据
 		alarmList = new ArrayList<DeviceAlarm>();// 警报状态数据
 	}
@@ -535,7 +538,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 						timingOff_iv.setImageResource(R.drawable.icon_4_2);
 					}
 				}
-			}, " 定时关机", timingOff == 0 ? 24 : timingOff - 1).show();
+			}, " 定时关机", timingOff == 0 ? 8 : timingOff - 1).show();
 			break;
 		case R.id.turnOn_iv:
 			mCenter.cSwitchOn(mXpgWifiDevice, true);
@@ -770,8 +773,10 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	public void setSwitch(boolean isOn) {
 		if (isOn) {
 			turnOff_layout.setVisibility(View.GONE);
+			ivTitleRight.setVisibility(View.VISIBLE);
 		} else {
 			turnOff_layout.setVisibility(View.VISIBLE);
+			ivTitleRight.setVisibility(View.GONE);
 			reAll();
 		}
 
@@ -1206,22 +1211,47 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				isTimeOut = true;
 				handler.sendEmptyMessage(handler_key.DISCONNECTED.ordinal());
 				break;
+			case GET_WEATHER:
+				int pm = (Integer) msg.obj;
+				pm25_tv.setText(""+pm);
+				if (pm < 35) {
+					outdoorQuality_tv.setText("优");
+				} else if(pm < 75) {
+					outdoorQuality_tv.setText("良");
+				} else if(pm < 115) {
+					outdoorQuality_tv.setText("轻度污染");
+				} else if(pm < 150) {
+					outdoorQuality_tv.setText("中度污染");
+				} else if(pm < 250) {
+					outdoorQuality_tv.setText("重度污染");
+				} else {
+					outdoorQuality_tv.setText("严重污染");
+				}
+				break;
 			}
 		}
 	};
 
 	/**
-	 * 获取本机所在城市
+	 * 获取PM2.5值
 	 */
-	public void initCity() {
-		new LocationService() {
+	public void getPm() {
+		if (StringUtils.isEmpty(Configs.city)) {
+			Configs.city = "广州";
+		}
+		Log.e("city", "" + Configs.city);
+		new WeatherService() {
+
 			@Override
 			public void onSuccess(JSONObject data) {
 				// TODO Auto-generated method stub
 				try {
-					String[] city = data.getString("address").split("\\|");
-					Log.e("city-json", "" + data);
-					getPm(city[2]);
+					int pm = data.getJSONArray("results").getJSONObject(0).getInt("pm25");
+					Message ms = new Message();
+					ms.obj = pm;
+					ms.what = handler_key.GET_WEATHER.ordinal();
+					handler.sendMessage(ms);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -1230,48 +1260,9 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			@Override
 			public void onFailed() {
 				// TODO Auto-generated method stub
-				Toast.makeText(AirPurActivity.this, "城市定位失败", Toast.LENGTH_SHORT).show();
+				Log.e("DeviceList", "获取失败");
 			}
-		}.startLocation();
-	}
-
-	/**
-	 * 获取PM2.5值
-	 */
-	public void getPm(String city) {
-		new GetPMService() {
-
-			@Override
-			public void onSuccess(JSONObject data) {
-				// TODO Auto-generated method stub
-				try {
-					Log.e("pm", "" + data);
-					JSONObject pm = data.getJSONObject("result");
-					pm25_tv.setText(pm.getString("pm2_5").split("\\.")[0]);
-					pm10_tv.setText(pm.getString("pm10").split("\\.")[0]);
-					int aqi = pm.getInt("aqi");
-					Log.e("aqi", "" + aqi);
-					if (0 < aqi && aqi <= 50) {
-						outdoorQuality_tv.setText("优");
-					} else if (50 < aqi && aqi <= 100) {
-						outdoorQuality_tv.setText("良");
-					} else if (101 < aqi && aqi <= 150) {
-						outdoorQuality_tv.setText("中");
-					} else {
-						outdoorQuality_tv.setText("差");
-					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onFailed() {
-				// TODO Auto-generated method stub
-				Toast.makeText(AirPurActivity.this, "PM2.5获取失败", Toast.LENGTH_SHORT).show();
-			}
-		}.GetWeather(city);
+		}.startLocation(Configs.city);
 	}
 
 	@Override

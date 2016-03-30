@@ -19,7 +19,7 @@
     <string name="dialog_logout_msg">确定要注销，返回登录界面吗？</string>
     <string name="dialog_disconnect">连接已断开</string>
     <string name="register_name_digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
-    <string name="airlink_tips_start">请按下设备按键,灯闪即表示设备已进入配置模式,\n点击开始配置</string>
+    <string name="airlink_tips_start">请同时按下图中所示按键两秒，进入配网模式\n然后点击开始配置。</string>
     <string name="airlink_btn_start">开始配置</string>
     <string name="airlink_please_wait">设备连接中，请耐心等待.</string>
     <string name="airlink_tips_error1">配置失败了，让我们看看哪里可能出了错：</string>
@@ -92,7 +92,7 @@
     <string name="search_device_already_configure">已配置的设备</string>
     <string name="search_device_tips1">你的网络中还没有已配置的设备,如已经配置过,\n请确认手机正连接着与设备相同的wifi.</string>
     <string name="search_device_configure_qr_code">二维码扫描添加虚拟设备</string>
-    <string name="search_device_configure">我要配置gokit</string>
+    <string name="search_device_configure">我要配置Mr.Future</string>
     <string name="account_manage">账号管理</string>
     <string name="about">关于</string>
     <string name="back_to_device_list">返回设备列表</string>

@@ -19,7 +19,13 @@ package com.future.framework;
 
 import android.app.Application;
 
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.future.framework.config.Configs;
+import com.future.framework.listeners.MyLocationListener;
+import com.xpg.common.useful.NetworkUtils;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
 /**
@@ -31,6 +37,9 @@ import com.xtremeprog.xpgconnect.XPGWifiSDK;
  * @author Lien
  */
 public class XpgApplication extends Application {
+	
+	public LocationClient mLocationClient = null;
+	public BDLocationListener myListener= new MyLocationListener();
 
 	/* (non-Javadoc)
 	 * @see android.app.Application#onCreate()
@@ -43,5 +52,21 @@ public class XpgApplication extends Application {
 		// 设定日志打印级别,日志保存文件名，是否在后台打印数据.
 		XPGWifiSDK.sharedInstance().setLogLevel(Configs.LOG_LEVEL,
 				"BassApp.log", Configs.DEBUG);
+		
+		if (NetworkUtils.isNetworkConnected(getApplicationContext())) {
+			mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
+			mLocationClient.registerLocationListener(myListener); // 注册监听函数
+			initLocation();
+			mLocationClient.start();
+		}
+	}
+	
+	private void initLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+		option.setCoorType("bd09ll");// 可选，默认gcj02，设置返回的定位结果坐标系
+		option.setIsNeedAddress(true);// 可选，设置是否需要地址信息，默认不需要
+		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
+		mLocationClient.setLocOption(option);
 	}
 }

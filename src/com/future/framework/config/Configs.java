@@ -41,6 +41,8 @@ public class Configs {
 
 	public static final XPGWifiLogLevel LOG_LEVEL = XPGWifiLogLevel.XPGWifiLogLevelAll;
 	
+	public static String city;
+	
 	/**  日志保存文件名. */
 	public static final String LOG_FILE_NAME = "BassApp.log";
 

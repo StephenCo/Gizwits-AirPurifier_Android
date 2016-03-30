@@ -43,7 +43,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 	// 三个fragment
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
-	private SensitivityFragment sensitivityFragment;
+	private RoseboxSecFragment roseboxSecFragment;
 	private AlarmFragment alarmFragment;
 	private RoseboxFragment roseboxFragment;
 
@@ -149,7 +149,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 			break;
 		case sensitivity:
 			fragmentTransaction = fragmentManager.beginTransaction();
-			fragmentTransaction.replace(R.id.content_layout, sensitivityFragment);
+			fragmentTransaction.replace(R.id.content_layout, roseboxSecFragment);
 			fragmentTransaction.commit();
 			break;
 		}
@@ -183,7 +183,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 	private void initFragment() {
 		// 开启事物，添加第一个fragment
 		fragmentManager = getFragmentManager();
-		sensitivityFragment = new SensitivityFragment(this);
+		roseboxSecFragment = new RoseboxSecFragment(this);
 		roseboxFragment = new RoseboxFragment(this);
 		alarmFragment = new AlarmFragment(this);
 	}
@@ -254,12 +254,14 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 				}
 			case UPDATE_UI:
 				if (statuMap != null && statuMap.size() > 0) {
-					sensitivityFragment
-							.changeSensi(Integer.parseInt(statuMap.get(JsonKeys.Air_Sensitivity).toString()));
 					if (currentFragment == CurrentView.rosebox) {
-						roseboxFragment.updateStatus(Integer.parseInt(statuMap.get(JsonKeys.Filter_Life).toString()));
+						roseboxFragment.updateStatus(Integer.parseInt(statuMap.get(JsonKeys.Filter_Life2).toString()));
 					}
-					roseboxFragment.setCurrent(Integer.parseInt(statuMap.get(JsonKeys.Filter_Life).toString()));
+					if (currentFragment == CurrentView.sensitivity) {
+						roseboxSecFragment.updateStatus(Integer.parseInt(statuMap.get(JsonKeys.Filter_Life).toString()));
+					}
+					roseboxFragment.setCurrent(Integer.parseInt(statuMap.get(JsonKeys.Filter_Life2).toString()));
+					roseboxSecFragment.setCurrent(Integer.parseInt(statuMap.get(JsonKeys.Filter_Life).toString()));
 				}
 				break;
 			case ALARM:
@@ -361,5 +363,9 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 	 */
 	public void resetRosebox() {
 		mCenter.cResetLife(mXpgWifiDevice);
+	}
+	
+	public void resetRoseboxSec() {
+		mCenter.cResetLifeSec(mXpgWifiDevice);
 	}
 }

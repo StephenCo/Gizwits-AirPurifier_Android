@@ -80,7 +80,8 @@
             android:id="@+id/btnAddQR"
             style="@style/ButtonBlue"
             android:text="@string/search_device_configure_qr_code"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/btnAddGokit"

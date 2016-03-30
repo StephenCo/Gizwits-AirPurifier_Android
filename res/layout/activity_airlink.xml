@@ -34,10 +34,10 @@
         android:visibility="gone" >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:src="@drawable/airlink_button" />
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="6dp"
+            android:src="@drawable/onkey" />
 
         <TextView
             android:id="@+id/tvTips"

@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:padding="10dp"
             android:layout_marginLeft="10dp"
             android:src="@drawable/return_icon" />
 
@@ -40,7 +41,7 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:background="@drawable/adv_bg1"
-            android:text="灵敏度" />
+            android:text="上层滤网" />
         <View   android:layout_width="1dp"
             android:layout_height="match_parent"/>
 
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
              android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="滤网" />
+            android:text="下层滤网" />
   <View   android:layout_width="1dp"
             android:layout_height="match_parent"/>
         

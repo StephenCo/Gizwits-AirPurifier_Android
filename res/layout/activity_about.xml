@@ -13,9 +13,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:padding="10dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:padding="10dp"
             android:src="@drawable/return_icon" />
 
         <TextView
@@ -30,14 +30,29 @@
     <ScrollView
         android:id="@+id/svAbout"
         android:layout_width="fill_parent"
-        android:scrollbars="vertical"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" >
 
-        <ImageView
-            android:id="@+id/ivAbout"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitStart"/>
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:src="@drawable/future_icon"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="20dp"
+                android:text="明日蔚蓝科技成立于2014年，积极响应国家级新区天府新区建设战略号召，致力于新型现代制造和高端服务。公司以自主研发、设计、制造，并创立自有品牌为一体的现代化智能产品服务公司，主要研发生活智能硬件，服务社会新型家庭。\n\n2015年，为应对城市日益严峻的雾霾压力，公司团队走访十多个国家和地区，研发出具有划时代意义的新风空气净化器Mr.Future未来先生，成为净化器行业一颗耀眼新星。" />
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

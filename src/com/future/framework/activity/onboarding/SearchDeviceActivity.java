@@ -158,12 +158,13 @@ public class SearchDeviceActivity extends BaseActivity implements
                 	if(deviceList.size()>0)
                 		deviceList.clear();
                 	
-                    if (allDeviceList.size() > 0) {
-                        for (XPGWifiDevice device : allDeviceList) {
-                            if (device.isLAN() && !device.isBind(setmanager.getUid())) {
-                                deviceList.add(device);
-                            }
+                    for (XPGWifiDevice device : allDeviceList) {
+                        if (device.isLAN() && !device.isBind(setmanager.getUid())) {
+                            deviceList.add(device);
                         }
+                    }
+                	
+                    if (deviceList.size() > 0) {
                         adapter.notifyDataSetChanged();
                         lvDevices.setVisibility(View.VISIBLE);
                         tvTips.setVisibility(View.GONE);

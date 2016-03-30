@@ -388,7 +388,6 @@ public class CmdCenter {
 	 */
 	public void cSwitchOn(final XPGWifiDevice xpgWifiDevice, boolean isOn) {
 		cWrite(xpgWifiDevice, JsonKeys.ON_OFF, isOn);
-		getStatus(xpgWifiDevice);
 	}
 
 	/**
@@ -399,7 +398,6 @@ public class CmdCenter {
 	 */
 	public void cCountDownOn(XPGWifiDevice xpgWifiDevice, int min) {
 		cWrite(xpgWifiDevice, JsonKeys.TIME_ON, min);
-		getStatus(xpgWifiDevice);
 	}
 
 	/**
@@ -410,7 +408,6 @@ public class CmdCenter {
 	 */
 	public void cCountDownOff(XPGWifiDevice xpgWifiDevice, int min) {
 		cWrite(xpgWifiDevice, JsonKeys.TIME_OFF, min);
-		getStatus(xpgWifiDevice);
 	}
 
 	/**
@@ -421,7 +418,6 @@ public class CmdCenter {
 	 */
 	public void cSetSpeed(XPGWifiDevice xpgWifiDevice, int lv) {
 		cWrite(xpgWifiDevice, JsonKeys.FAN_SPEED, lv);
-		getStatus(xpgWifiDevice);
 	}
 
 	/**
@@ -432,7 +428,6 @@ public class CmdCenter {
 	 */
 	public void cSwitchPlasma(XPGWifiDevice xpgWifiDevice, boolean isOn) {
 		cWrite(xpgWifiDevice, JsonKeys.Plasma, isOn);
-		getStatus(xpgWifiDevice);
 	}
 
 	/**
@@ -443,7 +438,6 @@ public class CmdCenter {
 	 */
 	public void cLED(XPGWifiDevice xpgWifiDevice, boolean isOn) {
 		cWrite(xpgWifiDevice, JsonKeys.LED, isOn);
-		getStatus(xpgWifiDevice);
 	}
 
 	/**
@@ -465,7 +459,16 @@ public class CmdCenter {
 	 */
 	public void cResetLife(XPGWifiDevice xpgWifiDevice) {
 		cWrite(xpgWifiDevice, JsonKeys.Filter_Life, 100);
-		getStatus(xpgWifiDevice);
+	}
+	
+	/**
+	 * 重置滤网寿命
+	 * 
+	 * @param xpgWifiDevice
+	 * @param isOn
+	 */
+	public void cResetLifeSec(XPGWifiDevice xpgWifiDevice) {
+		cWrite(xpgWifiDevice, JsonKeys.Filter_Life2, 100);
 	}
 
 	/**
@@ -476,7 +479,6 @@ public class CmdCenter {
 	 */
 	public void cAirSensitivity(XPGWifiDevice xpgWifiDevice, int lv) {
 		cWrite(xpgWifiDevice, JsonKeys.Air_Sensitivity, lv);
-		getStatus(xpgWifiDevice);
 	}
 
 	/**
