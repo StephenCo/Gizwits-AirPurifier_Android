@@ -1110,32 +1110,32 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				if (statuMap != null && statuMap.size() > 0) {
 					handler.removeMessages(handler_key.GET_STATUE_TIMEOUT.ordinal());
 
-					changeRUNmodeBg(Integer.parseInt(statuMap.get(JsonKeys.FAN_SPEED).toString()));
+//					changeRUNmodeBg(Integer.parseInt(statuMap.get(JsonKeys.FAN_SPEED).toString()));
 					setChildLock((Boolean) statuMap.get(JsonKeys.Child_Lock));
-					setIndicatorLight((Boolean) statuMap.get(JsonKeys.LED));
+//					setIndicatorLight((Boolean) statuMap.get(JsonKeys.LED));
 					setPlasma((Boolean) statuMap.get(JsonKeys.Plasma));
 					setSwitch((Boolean) statuMap.get(JsonKeys.ON_OFF));
-					int hourOn = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_ON).toString()));
-					if (DateUtil.minCastToHourMore(Integer.parseInt(statuMap.get(JsonKeys.TIME_ON).toString())) != 0) {
-						hourOn = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_ON).toString()))
-								+ 1;
-					}
-					setTimingOn(hourOn);
+//					int hourOn = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_ON).toString()));
+//					if (DateUtil.minCastToHourMore(Integer.parseInt(statuMap.get(JsonKeys.TIME_ON).toString())) != 0) {
+//						hourOn = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_ON).toString()))
+//								+ 1;
+//					}
+//					setTimingOn(hourOn);
 					int hourOff = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString()));
 					if (DateUtil.minCastToHourMore(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString())) != 0) {
 						hourOff = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString()))
 								+ 1;
 					}
 					setTimingOff(hourOff);
-					updateBackgound(statuMap.get(JsonKeys.Air_Quality).toString());
+//					updateBackgound(statuMap.get(JsonKeys.Air_Quality).toString());
 					int level = 0;
-					if (statuMap.get(JsonKeys.Air_Quality).toString().equals("1")) {
-						level = 5;
-					} else if (statuMap.get(JsonKeys.Air_Quality).toString().equals("2")) {
-						level = 9;
-					} else if (statuMap.get(JsonKeys.Air_Quality).toString().equals("3")) {
-						level = 15;
-					}
+//					if (statuMap.get(JsonKeys.Air_Quality).toString().equals("1")) {
+//						level = 5;
+//					} else if (statuMap.get(JsonKeys.Air_Quality).toString().equals("2")) {
+//						level = 9;
+//					} else if (statuMap.get(JsonKeys.Air_Quality).toString().equals("3")) {
+//						level = 15;
+//					}
 					int result = (int) (level * 8);
 					if (result > 100) {
 						result = 100;
