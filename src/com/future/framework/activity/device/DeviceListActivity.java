@@ -187,6 +187,7 @@ public class DeviceListActivity extends BaseActivity implements
 						setmanager.getPassword());
 			}
 		}
+		
 	}
 
 	/*

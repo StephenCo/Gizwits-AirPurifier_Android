@@ -63,6 +63,8 @@ public class SettingManager {
 
 	/** The unit. */
 	private final String UNIT = "unit";
+	
+	private final String J_REGISTRATION_ID = "j_registration_id";
 
 	/** The filter. */
 	static String filter = "=====";
@@ -195,5 +197,14 @@ public class SettingManager {
 	 */
 	public boolean getUnit() {
 		return spf.getBoolean(UNIT, true);
+	}
+	
+	public void setJRID(String jrid) {
+		spf.edit().putString(J_REGISTRATION_ID, jrid).commit();
+
+	}
+
+	public String getJRID() {
+		return spf.getString(J_REGISTRATION_ID, "");
 	}
 }

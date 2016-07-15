@@ -56,9 +56,9 @@ public class JsonKeys {
      */
     public final static String Plasma = "Switch_Plasma";
     /**
-     * 空气质量指示灯
+     * 空气质量指示灯(修改为阀门)
      */
-    public final static String LED = "LED_Air_Quality";
+    public final static String TAP = "Switch_Valve";
     /**
      * 儿童安全锁
      */
@@ -112,9 +112,11 @@ public class JsonKeys {
      */
     public final static String Week_Repeat = "Week_Repeat";
     
-    /**
-     * Air_Quality
-     */
-    public final static String Air_Quality = "Air_Quality";
+//    /**
+//     * Air_Quality
+//     */
+//    public final static String Air_Quality = "Air_Quality";
+    
+    public final static String Pm25 = "Dust_Indoor";
 
 }

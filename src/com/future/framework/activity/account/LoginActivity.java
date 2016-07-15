@@ -22,6 +22,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -32,6 +33,8 @@ import android.widget.Toast;
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.device.DeviceListActivity;
+import com.future.framework.receive.PushServer;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.common.useful.NetworkUtils;
 import com.xpg.common.useful.StringUtils;
@@ -107,6 +110,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			switch (key) {
 			// 登陆成功
 			case LOGIN_SUCCESS:
+				PushServer.sendDeviceInfos(LoginActivity.this,
+						setmanager.getToken(), setmanager.getJRID(),
+						new JsonHttpResponseHandler() {
+							public void onSuccess(int arg0,
+									org.json.JSONArray arg1) {
+								Log.e("send cid", "success");
+							};
+
+							public void onFailure(Throwable arg0, String arg1) {
+								Log.e("send cid", "failed");
+							};
+						});
 				handler.removeMessages(handler_key.LOGIN_TIMEOUT.ordinal());
 				Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT)
 						.show();
@@ -139,8 +154,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * com.gizwits.aircondition.activity.BaseActivity#onCreate(android.os.Bundle
 	 * )
 	 */
-	/* (non-Javadoc)
-	 * @see com.gizwits.framework.activity.BaseActivity#onCreate(android.os.Bundle)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gizwits.framework.activity.BaseActivity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +190,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 
 		tvForgot.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); // 下划线
-		
+
 		dialog = new ProgressDialog(this);
 		dialog.setMessage("登录中，请稍候...");
 		if (setmanager.getUserName() != null) {
@@ -184,7 +202,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	/*
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	@Override
@@ -197,7 +217,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.btnLogin:
 			if (!NetworkUtils.isNetworkConnected(this)) {
-				ToastUtils.showShort(this, "网络未连接");return;
+				ToastUtils.showShort(this, "网络未连接");
+				return;
 			}
 			// 登陆
 			if (StringUtils.isEmpty(etName.getText().toString())) {
@@ -232,8 +253,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * @see com.gizwits.framework.activity.BaseActivity#didUserLogin(int,
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
-	/* (non-Javadoc)
-	 * @see com.gizwits.framework.activity.BaseActivity#didUserLogin(int, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gizwits.framework.activity.BaseActivity#didUserLogin(int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	protected void didUserLogin(int error, String errorMessage, String uid,
@@ -252,7 +276,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onBackPressed()
 	 */
 	@Override

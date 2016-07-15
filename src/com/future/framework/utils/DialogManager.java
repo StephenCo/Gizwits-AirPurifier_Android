@@ -266,7 +266,7 @@ public class DialogManager {
 		int width = metric.widthPixels; 
 		
 		
-		String[] hours = { "  1", "  2", "  3", "  4", "  5", "  6", "  7", "  8", "关闭" };
+		String[] hours = { "  1", "  2", "  3", "  4", "  5", "  6", "  7", "  8", "  0" };
 		final int[] hour = { 1, 2, 3, 4, 5, 6, 7, 8, 0 };
 		final Dialog dialog = new Dialog(ctx, R.style.noBackgroundDialog) {
 		};

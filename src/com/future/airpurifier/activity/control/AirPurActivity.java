@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -455,18 +456,20 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	 * @param position
 	 */
 	private void updateBackgound(String lv) {
-		if (lv.equals("0")) {
+		homeQualityResult_tv.setText(statuMap.get(JsonKeys.Pm25).toString());
+		int lvi = Integer.parseInt(lv);
+		if (lvi <= 35) {
 			main_layout.setBackgroundResource(R.drawable.good_bg);
-			homeQualityResult_tv.setText("优");
-		} else if (lv.equals("1")) {
+//			homeQualityResult_tv.setText("优");
+		} else if (lvi <= 75) {
 			main_layout.setBackgroundResource(R.drawable.liang_bg);
-			homeQualityResult_tv.setText("良");
-		} else if (lv.equals("2")) {
+//			homeQualityResult_tv.setText("良");
+		} else if (lvi <= 150) {
 			main_layout.setBackgroundResource(R.drawable.middle_bg);
-			homeQualityResult_tv.setText("中");
-		} else if (lv.equals("3")) {
+//			homeQualityResult_tv.setText("中");
+		} else{
 			main_layout.setBackgroundResource(R.drawable.bad_bg);
-			homeQualityResult_tv.setText("差");
+//			homeQualityResult_tv.setText("差");
 		}
 
 	}
@@ -509,10 +512,10 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			break;
 		case R.id.qualityLightO_ll:
 			if (qualityLightO_ll.getTag().toString() == "0") {
-				mCenter.cLED(mXpgWifiDevice, false);
+				mCenter.cTap(mXpgWifiDevice, false);
 				setIndicatorLight(false);
 			} else {
-				mCenter.cLED(mXpgWifiDevice, true);
+				mCenter.cTap(mXpgWifiDevice, true);
 				setIndicatorLight(true);
 			}
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
@@ -525,7 +528,8 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				@Override
 				public void timingChosen(int time) {
 					// 设置定时开机时间
-					mCenter.cCountDownOff(mXpgWifiDevice, DateUtil.hourCastToMin(time));
+//					mCenter.cCountDownOff(mXpgWifiDevice, DateUtil.hourCastToMin(time));
+					mCenter.cCountDownOff(mXpgWifiDevice, time);
 					handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 					isAntiShake = true;
 					handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
@@ -1112,7 +1116,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 
 //					changeRUNmodeBg(Integer.parseInt(statuMap.get(JsonKeys.FAN_SPEED).toString()));
 					setChildLock((Boolean) statuMap.get(JsonKeys.Child_Lock));
-//					setIndicatorLight((Boolean) statuMap.get(JsonKeys.LED));
+					setIndicatorLight((Boolean) statuMap.get(JsonKeys.TAP));
 					setPlasma((Boolean) statuMap.get(JsonKeys.Plasma));
 					setSwitch((Boolean) statuMap.get(JsonKeys.ON_OFF));
 //					int hourOn = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_ON).toString()));
@@ -1121,13 +1125,15 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 //								+ 1;
 //					}
 //					setTimingOn(hourOn);
-					int hourOff = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString()));
-					if (DateUtil.minCastToHourMore(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString())) != 0) {
-						hourOff = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString()))
-								+ 1;
-					}
+					int hourOff = Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString());
+//					if (DateUtil.minCastToHourMore(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString())) != 0) {
+//						hourOff = DateUtil.minCastToHour(Integer.parseInt(statuMap.get(JsonKeys.TIME_OFF).toString()))
+//								+ 1;
+//					}
 					setTimingOff(hourOff);
 //					updateBackgound(statuMap.get(JsonKeys.Air_Quality).toString());
+					updateBackgound(statuMap.get(JsonKeys.Pm25).toString());
+//					homeQualityResult_tv.setText(statuMap.get(JsonKeys.Pm25).toString());
 					int level = 0;
 //					if (statuMap.get(JsonKeys.Air_Quality).toString().equals("1")) {
 //						level = 5;

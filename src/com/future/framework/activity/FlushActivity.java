@@ -21,6 +21,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.future.airpurifier.R;
 import com.future.framework.activity.account.LoginActivity;
 import com.future.framework.activity.device.DeviceListActivity;
@@ -67,5 +69,4 @@ public class FlushActivity extends BaseActivity {
 			}
 		}, 1000);
 	}
-
 }

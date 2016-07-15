@@ -18,6 +18,7 @@
 package com.future.framework;
 
 import android.app.Application;
+import cn.jpush.android.api.JPushInterface;
 
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -53,6 +54,8 @@ public class XpgApplication extends Application {
 		XPGWifiSDK.sharedInstance().setLogLevel(Configs.LOG_LEVEL,
 				"BassApp.log", Configs.DEBUG);
 		
+        JPushInterface.init(this);
+		
 		if (NetworkUtils.isNetworkConnected(getApplicationContext())) {
 			mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 			mLocationClient.registerLocationListener(myListener); // 注册监听函数
@@ -69,4 +72,5 @@ public class XpgApplication extends Application {
 		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
 		mLocationClient.setLocOption(option);
 	}
+	
 }

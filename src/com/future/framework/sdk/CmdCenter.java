@@ -431,13 +431,13 @@ public class CmdCenter {
 	}
 
 	/**
-	 * 空气质量指示灯
+	 * 空气质量指示灯(修改为空气阀门)
 	 * 
 	 * @param xpgWifiDevice
 	 * @param isOn
 	 */
-	public void cLED(XPGWifiDevice xpgWifiDevice, boolean isOn) {
-		cWrite(xpgWifiDevice, JsonKeys.LED, isOn);
+	public void cTap(XPGWifiDevice xpgWifiDevice, boolean isOn) {
+		cWrite(xpgWifiDevice, JsonKeys.TAP, isOn);
 	}
 
 	/**
