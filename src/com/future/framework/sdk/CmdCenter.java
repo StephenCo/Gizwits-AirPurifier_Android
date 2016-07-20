@@ -417,7 +417,7 @@ public class CmdCenter {
 	 * @param isOn
 	 */
 	public void cSetSpeed(XPGWifiDevice xpgWifiDevice, int lv) {
-		cWrite(xpgWifiDevice, JsonKeys.FAN_SPEED, lv);
+		cWrite(xpgWifiDevice, JsonKeys.Mode, lv);
 	}
 
 	/**

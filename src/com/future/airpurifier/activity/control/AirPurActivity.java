@@ -458,20 +458,31 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	private void updateBackgound(String lv) {
 		homeQualityResult_tv.setText(statuMap.get(JsonKeys.Pm25).toString());
 		int lvi = Integer.parseInt(lv);
+		int level = 0;
 		if (lvi <= 35) {
 			main_layout.setBackgroundResource(R.drawable.good_bg);
 //			homeQualityResult_tv.setText("优");
 		} else if (lvi <= 75) {
 			main_layout.setBackgroundResource(R.drawable.liang_bg);
+			level = 5;
 //			homeQualityResult_tv.setText("良");
 		} else if (lvi <= 150) {
 			main_layout.setBackgroundResource(R.drawable.middle_bg);
+			level = 9;
 //			homeQualityResult_tv.setText("中");
 		} else{
 			main_layout.setBackgroundResource(R.drawable.bad_bg);
+
+			level = 15;
 //			homeQualityResult_tv.setText("差");
 		}
-
+		
+		int result = (int) (level * 8);
+		if (result > 100) {
+			result = 100;
+		}
+		float quality = (100 - result) * mW100;
+		updateTips(quality);
 	}
 
 	@Override
@@ -591,8 +602,8 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			powerDialog.show();
 			break;
 		case R.id.auto_iv:
-			mCenter.cSetSpeed(mXpgWifiDevice, 3);
-			changeRUNmodeBg(3);
+			mCenter.cSetSpeed(mXpgWifiDevice, 1);
+			changeRUNmodeBg(1);
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 			isAntiShake = true;
 			handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
@@ -605,8 +616,8 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
 			break;
 		case R.id.standar_iv:
-			mCenter.cSetSpeed(mXpgWifiDevice, 1);
-			changeRUNmodeBg(1);
+			mCenter.cSetSpeed(mXpgWifiDevice, 3);
+			changeRUNmodeBg(3);
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 			isAntiShake = true;
 			handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
@@ -796,7 +807,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 		if (speed == 2) {
 			setSilentAnimation();
 		}
-		if (speed == 1) {
+		if (speed == 3) {
 			setStandarAnimation();
 		}
 
@@ -804,7 +815,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			setStrongAnimation();
 		}
 
-		if (speed == 3) {
+		if (speed == 1) {
 			setAutoAnimation();
 		}
 
@@ -1114,7 +1125,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				if (statuMap != null && statuMap.size() > 0) {
 					handler.removeMessages(handler_key.GET_STATUE_TIMEOUT.ordinal());
 
-//					changeRUNmodeBg(Integer.parseInt(statuMap.get(JsonKeys.FAN_SPEED).toString()));
+					changeRUNmodeBg(Integer.parseInt(statuMap.get(JsonKeys.Mode).toString()));
 					setChildLock((Boolean) statuMap.get(JsonKeys.Child_Lock));
 					setIndicatorLight((Boolean) statuMap.get(JsonKeys.TAP));
 					setPlasma((Boolean) statuMap.get(JsonKeys.Plasma));
@@ -1134,20 +1145,6 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 //					updateBackgound(statuMap.get(JsonKeys.Air_Quality).toString());
 					updateBackgound(statuMap.get(JsonKeys.Pm25).toString());
 //					homeQualityResult_tv.setText(statuMap.get(JsonKeys.Pm25).toString());
-					int level = 0;
-//					if (statuMap.get(JsonKeys.Air_Quality).toString().equals("1")) {
-//						level = 5;
-//					} else if (statuMap.get(JsonKeys.Air_Quality).toString().equals("2")) {
-//						level = 9;
-//					} else if (statuMap.get(JsonKeys.Air_Quality).toString().equals("3")) {
-//						level = 15;
-//					}
-					int result = (int) (level * 8);
-					if (result > 100) {
-						result = 100;
-					}
-					float quality = (100 - result) * mW100;
-					updateTips(quality);
 
 					DialogManager.dismissDialog(AirPurActivity.this, progressDialogRefreshing);
 				}

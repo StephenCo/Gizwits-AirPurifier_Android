@@ -113,8 +113,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				PushServer.sendDeviceInfos(LoginActivity.this,
 						setmanager.getToken(), setmanager.getJRID(),
 						new JsonHttpResponseHandler() {
-							public void onSuccess(int arg0,
-									org.json.JSONArray arg1) {
+							public void onSuccess(int arg0, String arg1) {
+								Log.e("send cid", "success");
+							};
+							
+							public void onSuccess(int arg0, org.json.JSONObject arg1) {
 								Log.e("send cid", "success");
 							};
 

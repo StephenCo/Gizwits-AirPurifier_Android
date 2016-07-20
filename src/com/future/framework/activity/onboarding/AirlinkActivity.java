@@ -306,7 +306,7 @@ public class AirlinkActivity extends BaseActivity implements OnClickListener {
 			}
 		}, 1000, 1000);
 		types = new ArrayList<XPGWifiSDK.XPGWifiGAgentType>();
-		types.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeESP);
+		types.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeHF);
 		mCenter.cSetAirLink(strSSid, strPsw, types);
 	}
 

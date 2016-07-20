@@ -50,7 +50,12 @@ public class JsonKeys {
      * 风速
      * 0.强力, 1.标准, 2.睡眠, 3.智能
      */
-    public final static String FAN_SPEED = "Wind_Velocity";
+//    public final static String FAN_SPEED = "Wind_Velocity";
+    /**
+     * 模式
+     * 0.强力, 1.标准, 2.睡眠, 3.智能
+     */
+    public final static String Mode = "Mode";
     /**
      * 等离子开关
      */
