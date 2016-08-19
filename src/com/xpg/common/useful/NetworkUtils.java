@@ -5,6 +5,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.telephony.TelephonyManager;
+
+import com.future.framework.utils.StringUtils;
 
 /**
  * 
@@ -47,16 +50,23 @@ public class NetworkUtils {
 	 * 
 	 * */
 	public static boolean isWifiConnected(Context context) {
-		if (context != null) {
-			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
-					.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo mWiFiNetworkInfo = mConnectivityManager
-					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-			if (mWiFiNetworkInfo != null) {
-				return mWiFiNetworkInfo.isAvailable();
-			}
-		}
-		return false;
+//		if (context != null) {
+//			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+//					.getSystemService(Context.CONNECTIVITY_SERVICE);
+//			NetworkInfo mWiFiNetworkInfo = mConnectivityManager
+//					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//			if (mWiFiNetworkInfo != null) {
+//				return mWiFiNetworkInfo.isAvailable();
+//			}
+//		}
+//		return false;
+		ConnectivityManager mgrConn = (ConnectivityManager) context   
+                .getSystemService(Context.CONNECTIVITY_SERVICE);   
+        TelephonyManager mgrTel = (TelephonyManager) context   
+                .getSystemService(Context.TELEPHONY_SERVICE);   
+        return ((mgrConn.getActiveNetworkInfo() != null && mgrConn   
+                .getActiveNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel   
+                .getNetworkType() == TelephonyManager.NETWORK_TYPE_UMTS);
 	}
 
 	/**
@@ -94,6 +104,10 @@ public class NetworkUtils {
 			 WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 			 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 			 ssid = wifiInfo.getSSID();
+			 if (StringUtils.isEmpty(ssid)) {
+				ssid = "<unknown ssid>";
+				return ssid;
+			}
 			 if (ssid.substring(0, 1).equals("\"")
 						&& ssid.substring(ssid.length() - 1).equals("\"")) {
 					ssid = ssid.substring(1, ssid.length() - 1);

@@ -293,7 +293,7 @@ public class ChangePswActivity extends BaseActivity implements OnClickListener {
 	 * java.lang.String)
 	 */
 	@Override
-	protected void didChangeUserPassword(int error, String errorMessage) {
+	protected void didChangeUserPassword(int error) {
 		if (error == 0) {
 			handler.sendEmptyMessage(handler_key.CHANGE_SUCCESS.ordinal());
 		} else {

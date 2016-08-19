@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="高级功能"
+            android:text="滤网状态"
             android:textColor="@android:color/white"
             android:textSize="22sp" />
     </RelativeLayout>
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:background="@drawable/adv_bg1"
-            android:text="上层滤网" />
+            android:text="下层滤网" />
         <View   android:layout_width="1dp"
             android:layout_height="match_parent"/>
 
@@ -52,9 +52,10 @@
             android:layout_height="wrap_content"
              android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="下层滤网" />
+            android:text="上层滤网" />
   <View   android:layout_width="1dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
         
         <Button
             android:id="@+id/alarm_btn"
@@ -63,6 +64,7 @@
             android:layout_weight="1"
              android:textColor="@color/white"
             android:background="@drawable/adv_bg1"
+            android:visibility="gone"
             android:text="报警" />
     </LinearLayout>
 

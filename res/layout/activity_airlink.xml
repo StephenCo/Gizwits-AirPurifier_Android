@@ -132,6 +132,7 @@
             android:layout_margin="10dp"
             android:id="@+id/btnSoftap"
             style="@style/ButtonBlue"
+            android:visibility="gone"
             android:text="@string/airlink_btn_softap" />
     </LinearLayout>
 

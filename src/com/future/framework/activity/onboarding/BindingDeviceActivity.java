@@ -187,7 +187,7 @@ public class BindingDeviceActivity extends BaseActivity implements
 	 * @see com.gizwits.framework.activity.BaseActivity#didBindDevice(int, java.lang.String, java.lang.String)
 	 */
 	@Override
-	protected void didBindDevice(int error, String errorMessage, String did) {
+	protected void didBindDevice(int error, String did) {
 		if (error == 0) {
 			handler.sendEmptyMessage(handler_key.BIND_SUCCESS.ordinal());
 		}else{

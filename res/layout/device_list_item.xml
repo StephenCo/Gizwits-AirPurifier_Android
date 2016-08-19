@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_margin="5dp"
-            android:src="@drawable/device_icon_blue" />
+            android:src="@drawable/online" />
 
         <TextView
             android:id="@+id/name"

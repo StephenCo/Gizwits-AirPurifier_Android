@@ -50,7 +50,9 @@ import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.onboarding.SearchDeviceActivity;
 import com.future.framework.config.Configs;
+import com.future.framework.config.GizwitsErrorMsg;
 import com.future.framework.widget.MyInputFilter;
+import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.xpg.common.useful.NetworkUtils;
 import com.xpg.common.useful.StringUtils;
 import com.xpg.ui.utils.ToastUtils;
@@ -549,8 +551,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	protected void didRegisterUser(int error, String errorMessage, String uid, String token) {
-		Log.i("error message uid token", error + " " + errorMessage + " " + uid + " " + token);
+	protected void didRegisterUser(int error, String uid, String token) {
+		Log.i("error message uid token", error + " " + uid + " " + token);
 		if (!uid.equals("") && !token.equals("")) {// 注册成功
 			Message msg = new Message();
 			msg.what = handler_key.REG_SUCCESS.ordinal();
@@ -564,7 +566,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		} else {// 注册失败
 			Message msg = new Message();
 			msg.what = handler_key.TOAST.ordinal();
-			msg.obj = errorMessage;
+			msg.obj = GizwitsErrorMsg.getEqual(error).getCHNDescript();
 			handler.sendMessage(msg);
 		}
 	}
@@ -585,10 +587,9 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	 * handler_key.TOAST.ordinal(); msg.obj = errorMessage;
 	 * handler.sendMessage(msg); } }
 	 */
-	protected void didRequestSendPhoneSMSCode(int result, java.lang.String errorMessage) {
-		Log.e("AppTest", result + ", " + errorMessage);
+	protected void didRequestSendPhoneSMSCode(int result) {
+		Log.e("AppTest", result+"");
 		if (result == 0) {// 发送成功
-
 			Message msg = new Message();
 			msg.what = handler_key.TOAST.ordinal();
 			msg.obj = "发送成功";
@@ -597,7 +598,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		} else {// 发送失败
 			Message msg = new Message();
 			msg.what = handler_key.TOAST.ordinal();
-			msg.obj = errorMessage;
+			msg.obj = GizwitsErrorMsg.getEqual(result).getCHNDescript();
 			handler.sendMessage(msg);
 			handler.sendEmptyMessage(handler_key.CaptchaCode.ordinal());
 		}
@@ -608,13 +609,25 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	 */
 	private String tokenString, captchaidString, captcthishaURL_String;
 
-	protected void didGetCaptchaCode(int result, java.lang.String errorMessage, java.lang.String token,
-			java.lang.String captchaId, java.lang.String captcthishaURL) {
+//	protected void didGetCaptchaCode(int result, java.lang.String errorMessage, java.lang.String token,
+//			java.lang.String captchaId, java.lang.String captcthishaURL) {
+//		Log.e("AppTest",
+//				"图片验证码回调" + result + ", " + errorMessage + ", " + token + ", " + captchaId + ", " + captcthishaURL);
+//		tokenString = token;
+//		captchaidString = captchaId;
+//		captcthishaURL_String = captcthishaURL;
+//		new load_image().execute(captcthishaURL_String);
+//	}
+	
+	@Override
+	protected void didGetCaptchaCode(GizWifiErrorCode result, String token,
+			String captchaId, String captchaURL) {
+		// TODO Auto-generated method stub
 		Log.e("AppTest",
-				"图片验证码回调" + result + ", " + errorMessage + ", " + token + ", " + captchaId + ", " + captcthishaURL);
+				"图片验证码回调" + result.name() + ", " + token + ", " + captchaId + ", " + captchaURL);
 		tokenString = token;
 		captchaidString = captchaId;
-		captcthishaURL_String = captcthishaURL;
+		captcthishaURL_String = captchaURL;
 		new load_image().execute(captcthishaURL_String);
 	}
 

@@ -25,8 +25,8 @@ import com.future.framework.activity.BaseActivity;
 import com.future.framework.config.JsonKeys;
 import com.future.framework.entity.AdvanceType;
 import com.future.framework.entity.DeviceAlarm;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.useful.DateUtil;
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 /**
  * 高级功能
@@ -87,7 +87,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.advanced_layout);
-		mXpgWifiDevice.setListener(deviceListener);
+		mGizWifiDevice.setListener(deviceListener);
 		statuMap = new ConcurrentHashMap<String, Object>();// 设备状态数据
 		alarmList = new ArrayList<DeviceAlarm>();// 警报状态数据
 		initUI();
@@ -99,7 +99,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		AdvanceType at = (AdvanceType) getIntent().getSerializableExtra("advanced_set");
-		mCenter.cGetStatus(mXpgWifiDevice);
+		mCenter.cGetStatus(mGizWifiDevice);
 		if (at != null) {
 			switch (at) {
 			case alarm:
@@ -117,7 +117,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 
 	private void initUI() {
 		title_tv = (TextView) findViewById(R.id.ivTitle);
-		title_tv.setText("高级功能");
+		title_tv.setText("滤网状态");
 		ivLeft = (ImageView) findViewById(R.id.ivBack);
 		ivLeft.setOnClickListener(this);
 		sensitivity_btn = (Button) findViewById(R.id.sensitivity_btn);
@@ -211,7 +211,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 
 	// device data request
 	@Override
-	protected void didReceiveData(XPGWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
+	protected void didReceiveData(GizWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
 		this.deviceDataMap = dataMap;
 		handler.sendEmptyMessage(handler_key.RECEIVED.ordinal());
 	}
@@ -268,10 +268,10 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 				alarmFragment.addInfos(alarmList);
 				break;
 			case DISCONNECTED:
-				mCenter.cDisconnect(mXpgWifiDevice);
+				mCenter.cDisconnect(mGizWifiDevice);
 				break;
 			case GET_STATUE:
-				mCenter.cGetStatus(mXpgWifiDevice);
+				mCenter.cGetStatus(mGizWifiDevice);
 				break;
 			}
 		}
@@ -353,7 +353,7 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 	 * @param level
 	 */
 	public void sendSensitivityLv(int lv) {
-		mCenter.cAirSensitivity(mXpgWifiDevice, lv);
+		mCenter.cAirSensitivity(mGizWifiDevice, lv);
 	}
 
 	/**
@@ -362,10 +362,10 @@ public class AdvancedActivity extends BaseActivity implements OnClickListener {
 	 * @param level
 	 */
 	public void resetRosebox() {
-		mCenter.cResetLife(mXpgWifiDevice);
+		mCenter.cResetLife(mGizWifiDevice);
 	}
 	
 	public void resetRoseboxSec() {
-		mCenter.cResetLifeSec(mXpgWifiDevice);
+		mCenter.cResetLifeSec(mGizWifiDevice);
 	}
 }

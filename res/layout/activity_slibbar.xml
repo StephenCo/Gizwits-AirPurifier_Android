@@ -131,7 +131,7 @@
                     <TextView
                         style="@style/MenuTextViewGray"
                         android:layout_toRightOf="@+id/iconFunction"
-                        android:text="高级功能" />
+                        android:text="滤网状态" />
 
                     <ImageView
                         android:layout_width="wrap_content"

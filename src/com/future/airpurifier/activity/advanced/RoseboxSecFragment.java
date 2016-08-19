@@ -92,6 +92,9 @@ public class RoseboxSecFragment extends Fragment implements OnClickListener {
 	
 	//update rosbox data
 	public void updateStatus(int level) {
+		if (!isAdded()) {
+			return;
+		}
 		switch (level) {
 		case 0:
 			tvStatu.setText("失效停机");

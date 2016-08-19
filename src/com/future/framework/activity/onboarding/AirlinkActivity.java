@@ -35,11 +35,12 @@ import android.widget.TextView;
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.device.DeviceListActivity;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.gizwits.gizwifisdk.enumration.GizWifiGAgentType;
+import com.gizwits.gizwifisdk.enumration.XPGWifiGAgentType;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.common.useful.StringUtils;
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
-import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiGAgentType;
 
 /**
  * ClassName: Class AirlinkActivity. <br/>
@@ -305,8 +306,8 @@ public class AirlinkActivity extends BaseActivity implements OnClickListener {
 				handler.sendEmptyMessage(handler_key.TICK_TIME.ordinal());
 			}
 		}, 1000, 1000);
-		types = new ArrayList<XPGWifiSDK.XPGWifiGAgentType>();
-		types.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeHF);
+		types = new ArrayList<XPGWifiGAgentType>();
+		types.add(XPGWifiGAgentType.XPGWifiGAgentTypeHF);
 		mCenter.cSetAirLink(strSSid, strPsw, types);
 	}
 
@@ -335,7 +336,7 @@ public class AirlinkActivity extends BaseActivity implements OnClickListener {
 	 * com.xtremeprog.xpgconnect.XPGWifiDevice)
 	 */
 	@Override
-	protected void didSetDeviceWifi(int error, XPGWifiDevice device) {
+	protected void didSetDeviceWifi(int error, GizWifiDevice device) {
 		if (error == 0) {
 			handler.sendEmptyMessage(handler_key.CONFIG_SUCCESS.ordinal());
 		} else {

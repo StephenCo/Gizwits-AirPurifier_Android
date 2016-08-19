@@ -1,5 +1,5 @@
 /**
- * Project Name:XPGSdkV4AppBase
+ * Project Name:GizSdkV4AppBase
  * File Name:ManageListAdapter.java
  * Package Name:com.gizwits.framework.adapter
  * Date:2015-1-27 14:46:55
@@ -30,10 +30,7 @@ import android.widget.TextView;
 import com.future.airpurifier.R;
 import com.future.framework.config.Configs;
 import com.future.framework.utils.StringUtils;
-
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
-
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
 
 
 // TODO: Auto-generated Javadoc
@@ -52,7 +49,7 @@ public class ManageListAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 
 	/** The wifidevicelist. */
-	private List<XPGWifiDevice> devicelist;
+	private List<GizWifiDevice> devicelist;
 
 
 	/** The context. */
@@ -66,7 +63,7 @@ public class ManageListAdapter extends BaseAdapter {
 	 * @param list
 	 *            设备列表
 	 */
-	public ManageListAdapter(Context c, List<XPGWifiDevice> list) {
+	public ManageListAdapter(Context c, List<GizWifiDevice> list) {
 		this.devicelist = list;
 		this.context = c;
 		this.inflater = LayoutInflater.from(context);
@@ -117,7 +114,7 @@ public class ManageListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		XPGWifiDevice device = devicelist.get(position);
+		GizWifiDevice device = devicelist.get(position);
 		
 		String name="";
 		if(StringUtils.isEmpty(device.getRemark()))

@@ -1,5 +1,5 @@
 /**
- * Project Name:XPGSdkV4AppBase
+ * Project Name:GizSdkV4AppBase
  * File Name:BaseActivity.java
  * Package Name:com.gizwits.framework.activity
  * Date:2015-1-27 11:32:52
@@ -38,14 +38,14 @@ import com.future.airpurifier.R;
 import com.future.framework.sdk.CmdCenter;
 import com.future.framework.sdk.SettingManager;
 import com.future.framework.utils.Historys;
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
-import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
-import com.xtremeprog.xpgconnect.XPGWifiSSID;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.gizwits.gizwifisdk.api.GizWifiSSID;
+import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
+import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * 所有activity的基类。该基类实现了XPGWifiDeviceListener和XPGWifiSDKListener两个监听器，并提供全局的回调方法。
+ * 所有activity的基类。该基类实现了GizWifiDeviceListener和GizWifiSDKListener两个监听器，并提供全局的回调方法。
  * .
  * 
  * @author Lien Li
@@ -57,10 +57,10 @@ public class BaseActivity extends Activity {
 	/**
 	 * 设备列表.
 	 */
-	protected static List<XPGWifiDevice> deviceslist = new ArrayList<XPGWifiDevice>();
+	protected static List<GizWifiDevice> deviceslist = new ArrayList<GizWifiDevice>();
 
 	/** 绑定列表 */
-	protected static List<XPGWifiDevice> bindlist = new ArrayList<XPGWifiDevice>();
+	protected static List<GizWifiDevice> bindlist = new ArrayList<GizWifiDevice>();
 
 	/**
 	 * 指令管理器.
@@ -73,7 +73,7 @@ public class BaseActivity extends Activity {
 	protected SettingManager setmanager;
 
 	/** 当前操作的设备 */
-	protected static XPGWifiDevice mXpgWifiDevice;
+	protected static GizWifiDevice mGizWifiDevice;
 
 	/** The handler. */
 	private Handler handler = new Handler() {
@@ -83,75 +83,75 @@ public class BaseActivity extends Activity {
 	};
 
 	/**
-	 * XPGWifiDeviceListener
+	 * GizWifiDeviceListener
 	 * <p/>
 	 * 设备属性监听器。 设备连接断开、获取绑定参数、获取设备信息、控制和接受设备信息相关.
 	 */
-	protected XPGWifiDeviceListener deviceListener = new XPGWifiDeviceListener() {
+	protected GizWifiDeviceListener deviceListener = new GizWifiDeviceListener() {
 
 		@Override
-		public void didDeviceOnline(XPGWifiDevice device, boolean isOnline) {
+		public void didDeviceOnline(GizWifiDevice device, boolean isOnline) {
 			BaseActivity.this.didDeviceOnline(device, isOnline);
 		}
 
 		@Override
-		public void didDisconnected(XPGWifiDevice device) {
+		public void didDisconnected(GizWifiDevice device, int result) {
 			BaseActivity.this.didDisconnected(device);
 		}
 
 		@Override
-		public void didLogin(XPGWifiDevice device, int result) {
+		public void didLogin(GizWifiDevice device, int result) {
 			BaseActivity.this.didLogin(device, result);
 		}
 
 		@Override
-		public void didReceiveData(XPGWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
+		public void didReceiveData(GizWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
 			BaseActivity.this.didReceiveData(device, dataMap, result);
 		}
 
 	};
 
 	/**
-	 * XPGWifiSDKListener
+	 * GizWifiSDKListener
 	 * <p/>
 	 * sdk监听器。 配置设备上线、注册登录用户、搜索发现设备、用户绑定和解绑设备相关.
 	 */
-	private XPGWifiSDKListener sdkListener = new XPGWifiSDKListener() {
+	private GizWifiSDKListener sdkListener = new GizWifiSDKListener() {
 
 		@Override
 		public void didBindDevice(int error, String errorMessage, String did) {
-			BaseActivity.this.didBindDevice(error, errorMessage, did);
+			BaseActivity.this.didBindDevice(error, did);
 		}
 
-		@Override
-		public void didChangeUserEmail(int error, String errorMessage) {
-			BaseActivity.this.didChangeUserEmail(error, errorMessage);
-		}
+//		@Override
+//		public void didChangeUserEmail(int error, String errorMessage) {
+//			BaseActivity.this.didChangeUserEmail(error, errorMessage);
+//		}
 
 		@Override
 		public void didChangeUserPassword(int error, String errorMessage) {
-			BaseActivity.this.didChangeUserPassword(error, errorMessage);
+			BaseActivity.this.didChangeUserPassword(error);
 		}
 
+//		@Override
+//		public void didChangeUserPhone(int error, String errorMessage) {
+//			BaseActivity.this.didChangeUserPhone(error, errorMessage);
+//		}
+		
 		@Override
-		public void didChangeUserPhone(int error, String errorMessage) {
-			BaseActivity.this.didChangeUserPhone(error, errorMessage);
-		}
-
-		@Override
-		public void didDiscovered(int error, List<XPGWifiDevice> devicesList) {
-
+		public void didDiscovered(int error, List<GizWifiDevice> devicesList) {
+			Log.e("123", "DIDDISCOVERED");
 			BaseActivity.this.didDiscovered(error, devicesList);
 		}
 
 		@Override
-		public void didGetSSIDList(int error, List<XPGWifiSSID> ssidInfoList) {
+		public void didGetSSIDList(int error, List<GizWifiSSID> ssidInfoList) {
 			BaseActivity.this.didGetSSIDList(error, ssidInfoList);
 		}
 
 		@Override
 		public void didRegisterUser(int error, String errorMessage, String uid, String token) {
-			BaseActivity.this.didRegisterUser(error, errorMessage, uid, token);
+			BaseActivity.this.didRegisterUser(error, uid, token);
 		}
 
 		/*
@@ -161,32 +161,31 @@ public class BaseActivity extends Activity {
 		 */
 
 		@Override
-		public void didSetDeviceWifi(int error, XPGWifiDevice device) {
+		public void didSetDeviceWifi(int error, GizWifiDevice device) {
 			BaseActivity.this.didSetDeviceWifi(error, device);
 		}
 
 		@Override
 		public void didUnbindDevice(int error, String errorMessage, String did) {
-			BaseActivity.this.didUnbindDevice(error, errorMessage, did);
+			BaseActivity.this.didUnbindDevice(error, did);
 		}
 
 		@Override
 		public void didUserLogin(int error, String errorMessage, String uid, String token) {
-			BaseActivity.this.didUserLogin(error, errorMessage, uid, token);
+			BaseActivity.this.didUserLogin(error, uid, token);
 		}
 
 		@Override
 		public void didUserLogout(int error, String errorMessage) {
-			BaseActivity.this.didUserLogout(error, errorMessage);
+			BaseActivity.this.didUserLogout(error);
 		}
-
-		public void didGetCaptchaCode(int result, java.lang.String errorMessage, java.lang.String token,
-				java.lang.String captchaId, java.lang.String captchaURL) {
-			BaseActivity.this.didGetCaptchaCode(result, errorMessage, token, captchaId, captchaURL);
-		}
+		
+		public void didGetCaptchaCode(com.gizwits.gizwifisdk.enumration.GizWifiErrorCode result, String token, String captchaId, String captchaURL) {
+			BaseActivity.this.didGetCaptchaCode(result, token, captchaId, captchaURL);
+		};
 
 		public void didRequestSendPhoneSMSCode(int result, java.lang.String errorMessage) {
-			BaseActivity.this.didRequestSendPhoneSMSCode(result, errorMessage);
+			BaseActivity.this.didRequestSendPhoneSMSCode(result);
 		}
 
 	};
@@ -197,7 +196,7 @@ public class BaseActivity extends Activity {
 		setmanager = new SettingManager(getApplicationContext());
 		mCenter = CmdCenter.getInstance(getApplicationContext());
 		// 每次返回activity都要注册一次sdk监听器，保证sdk状态能正确回调
-		mCenter.getXPGWifiSDK().setListener(sdkListener);
+		mCenter.getGizWifiSDK().setListener(sdkListener);
 		// 把activity推入历史栈，退出app后清除历史栈，避免造成内存溢出
 		Historys.put(this);
 	}
@@ -210,7 +209,7 @@ public class BaseActivity extends Activity {
 	 * @param errorMessage
 	 *            错误信息
 	 */
-	protected void didUserLogout(int error, String errorMessage) {
+	protected void didUserLogout(int error) {
 
 	}
 
@@ -226,7 +225,7 @@ public class BaseActivity extends Activity {
 	 * @param token
 	 *            授权令牌
 	 */
-	protected void didUserLogin(int error, String errorMessage, String uid, String token) {
+	protected void didUserLogin(int error, String uid, String token) {
 
 	}
 
@@ -240,7 +239,7 @@ public class BaseActivity extends Activity {
 	 * @param did
 	 *            设备注册id
 	 */
-	protected void didUnbindDevice(int error, String errorMessage, String did) {
+	protected void didUnbindDevice(int error, String did) {
 
 	}
 
@@ -252,7 +251,7 @@ public class BaseActivity extends Activity {
 	 * @param device
 	 *            设备对象
 	 */
-	protected void didSetDeviceWifi(int error, XPGWifiDevice device) {
+	protected void didSetDeviceWifi(int error, GizWifiDevice device) {
 
 	}
 
@@ -278,8 +277,7 @@ public class BaseActivity extends Activity {
 	 * @param captchaId
 	 * @param captchaURL
 	 */
-	protected void didGetCaptchaCode(int result, java.lang.String errorMessage, java.lang.String token,
-			java.lang.String captchaId, java.lang.String captcthishaURL) {
+	protected void didGetCaptchaCode(com.gizwits.gizwifisdk.enumration.GizWifiErrorCode result, String token, String captchaId, String captchaURL) {
 		// Log.e("AppTest", "图片验证码回调" + result + ", " + errorMessage + ", "
 		// + token + ", " + captchaId + ", " + captcthishaURL);
 	}
@@ -290,7 +288,7 @@ public class BaseActivity extends Activity {
 	 * @param result
 	 * @param errorMessage
 	 */
-	protected void didRequestSendPhoneSMSCode(int result, java.lang.String errorMessage) {
+	protected void didRequestSendPhoneSMSCode(int result) {
 
 	}
 
@@ -306,7 +304,7 @@ public class BaseActivity extends Activity {
 	 * @param token
 	 *            the 授权令牌
 	 */
-	protected void didRegisterUser(int error, String errorMessage, String uid, String token) {
+	protected void didRegisterUser(int error, String uid, String token) {
 		// TODO Auto-generated method stub
 
 	}
@@ -319,7 +317,7 @@ public class BaseActivity extends Activity {
 	 * @param ssidInfoList
 	 *            ssid列表
 	 */
-	protected void didGetSSIDList(int error, List<XPGWifiSSID> ssidInfoList) {
+	protected void didGetSSIDList(int error, List<GizWifiSSID> ssidInfoList) {
 		// TODO Auto-generated method stub
 
 	}
@@ -332,23 +330,23 @@ public class BaseActivity extends Activity {
 	 * @param devicesList
 	 *            设备列表
 	 */
-	protected void didDiscovered(int error, List<XPGWifiDevice> devicesList) {
+	protected void didDiscovered(int error, List<GizWifiDevice> devicesList) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/**
-	 * 更换注册手机号码回调接口.
-	 * 
-	 * @param error
-	 *            结果代码
-	 * @param errorMessage
-	 *            错误信息
-	 */
-	protected void didChangeUserPhone(int error, String errorMessage) {
-		// TODO Auto-generated method stub
-
-	}
+//	/**
+//	 * 更换注册手机号码回调接口.
+//	 * 
+//	 * @param error
+//	 *            结果代码
+//	 * @param errorMessage
+//	 *            错误信息
+//	 */
+//	protected void didChangeUserPhone(int error, String errorMessage) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	/**
 	 * 更换密码回调接口.
@@ -358,22 +356,22 @@ public class BaseActivity extends Activity {
 	 * @param errorMessage
 	 *            错误信息
 	 */
-	protected void didChangeUserPassword(int error, String errorMessage) {
+	protected void didChangeUserPassword(int error) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/**
-	 * 更换注册邮箱.
-	 * 
-	 * @param error
-	 *            结果代码
-	 * @param errorMessage
-	 *            错误信息
-	 */
-	protected void didChangeUserEmail(int error, String errorMessage) {
-
-	}
+//	/**
+//	 * 更换注册邮箱.
+//	 * 
+//	 * @param error
+//	 *            结果代码
+//	 * @param errorMessage
+//	 *            错误信息
+//	 */
+//	protected void didChangeUserEmail(int error, String errorMessage) {
+//
+//	}
 
 	/**
 	 * 绑定设备结果回调.
@@ -385,7 +383,7 @@ public class BaseActivity extends Activity {
 	 * @param did
 	 *            设备注册id
 	 */
-	protected void didBindDevice(int error, String errorMessage, String did) {
+	protected void didBindDevice(int error, String did) {
 
 	}
 
@@ -401,7 +399,7 @@ public class BaseActivity extends Activity {
 	 * @param result
 	 *            状态代码
 	 */
-	protected void didReceiveData(XPGWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
+	protected void didReceiveData(GizWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
 
 	}
 
@@ -413,7 +411,7 @@ public class BaseActivity extends Activity {
 	 * @param result
 	 *            状态代码
 	 */
-	protected void didLogin(XPGWifiDevice device, int result) {
+	protected void didLogin(GizWifiDevice device, int result) {
 
 	}
 
@@ -423,7 +421,7 @@ public class BaseActivity extends Activity {
 	 * @param device
 	 *            设备对象
 	 */
-	protected void didDisconnected(XPGWifiDevice device) {
+	protected void didDisconnected(GizWifiDevice device) {
 
 	}
 
@@ -435,7 +433,7 @@ public class BaseActivity extends Activity {
 	 * @param isOnline
 	 *            上下线状态
 	 */
-	protected void didDeviceOnline(XPGWifiDevice device, boolean isOnline) {
+	protected void didDeviceOnline(GizWifiDevice device, boolean isOnline) {
 
 	}
 
@@ -446,30 +444,30 @@ public class BaseActivity extends Activity {
 	 *            the mac
 	 * @param did
 	 *            the did
-	 * @return the XPG wifi device
+	 * @return the Giz wifi device
 	 */
-	public static XPGWifiDevice findDeviceByMac(String mac, String did) {
-		XPGWifiDevice xpgdevice = null;
+	public static GizWifiDevice findDeviceByMac(String mac, String did) {
+		GizWifiDevice Gizdevice = null;
 		Log.i("count", BaseActivity.deviceslist.size() + "");
 		for (int i = 0; i < BaseActivity.deviceslist.size(); i++) {
-			XPGWifiDevice device = deviceslist.get(i);
+			GizWifiDevice device = deviceslist.get(i);
 			if (device != null) {
 				Log.i("deivcemac", device.getMacAddress());
 				if (device != null && device.getMacAddress().equals(mac) && device.getDid().equals(did)) {
-					xpgdevice = device;
+					Gizdevice = device;
 					break;
 				}
 			}
 
 		}
 
-		return xpgdevice;
+		return Gizdevice;
 	}
 
 	public void onResume() {
 		super.onResume();
 		// 每次返回activity都要注册一次sdk监听器，保证sdk状态能正确回调
-		mCenter.getXPGWifiSDK().setListener(sdkListener);
+		mCenter.getGizWifiSDK().setListener(sdkListener);
 	}
 
 	/**
@@ -480,9 +478,9 @@ public class BaseActivity extends Activity {
 	protected void initBindList() {
 		if (bindlist != null && bindlist.size() > 0)
 			bindlist.clear();
-		for (XPGWifiDevice xpgDevice : deviceslist) {
-			if (xpgDevice.isBind(setmanager.getUid())) {
-				bindlist.add(xpgDevice);
+		for (GizWifiDevice GizDevice : deviceslist) {
+			if (GizDevice.isBind(setmanager.getUid())) {
+				bindlist.add(GizDevice);
 			}
 		}
 	}

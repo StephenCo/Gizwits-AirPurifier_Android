@@ -1,5 +1,5 @@
 /**
- * Project Name:XPGSdkV4AppBase
+ * Project Name:GizSdkV4AppBase
  * File Name:SearchDeviceActivity.java
  * Package Name:com.gizwits.framework.activity.onboarding
  * Date:2015-1-27 14:46:15
@@ -44,15 +44,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.device.DeviceListActivity;
 import com.future.framework.adapter.SearchListAdapter;
 import com.future.framework.utils.DialogManager;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.common.useful.NetworkUtils;
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 // TODO: Auto-generated Javadoc
 
@@ -95,10 +94,10 @@ public class SearchDeviceActivity extends BaseActivity implements
     /**
      * The device list.
      */
-    private List<XPGWifiDevice> deviceList;
+    private List<GizWifiDevice> deviceList;
     
     /** The all device list. */
-    private List<XPGWifiDevice> allDeviceList;
+    private List<GizWifiDevice> allDeviceList;
 
     /**
      * The dialog connect tip.
@@ -158,7 +157,7 @@ public class SearchDeviceActivity extends BaseActivity implements
                 	if(deviceList.size()>0)
                 		deviceList.clear();
                 	
-                    for (XPGWifiDevice device : allDeviceList) {
+                    for (GizWifiDevice device : allDeviceList) {
                         if (device.isLAN() && !device.isBind(setmanager.getUid())) {
                             deviceList.add(device);
                         }
@@ -236,7 +235,7 @@ public class SearchDeviceActivity extends BaseActivity implements
         loadingDialog = new ProgressDialog(this);
         loadingDialog.setMessage("加载中，请稍候.");
         loadingDialog.setCancelable(false);
-        deviceList = new ArrayList<XPGWifiDevice>();
+        deviceList = new ArrayList<GizWifiDevice>();
         adapter = new SearchListAdapter(this, deviceList);
         lvDevices.setAdapter(adapter);
         noNetworkDialog = DialogManager.getNoNetworkDialog(this);
@@ -248,7 +247,7 @@ public class SearchDeviceActivity extends BaseActivity implements
 
             }
         });
-        allDeviceList = new ArrayList<XPGWifiDevice>();
+        allDeviceList = new ArrayList<GizWifiDevice>();
         
         Bundle mBundle = getIntent().getExtras();
 		if (mBundle != null) {
@@ -304,13 +303,13 @@ public class SearchDeviceActivity extends BaseActivity implements
      * @see com.gizwits.framework.activity.BaseActivity#didDiscovered(int, java.util.List)
      */
     @Override
-    protected void didDiscovered(int error, List<XPGWifiDevice> devicesList) {
+    protected void didDiscovered(int error, List<GizWifiDevice> devicesList) {
 //        Log.e("SearchDevice", devicesList.get(0).getPasscode());
         if (devicesList.size() > 0) {
             allDeviceList=devicesList;
         }
     }
-
+    
     /* (non-Javadoc)
      * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
      */
@@ -318,7 +317,7 @@ public class SearchDeviceActivity extends BaseActivity implements
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         // TODO 跳到获取passcode activity
-    	XPGWifiDevice device =(XPGWifiDevice) adapter.getItem(position);
+    	GizWifiDevice device =(GizWifiDevice) adapter.getItem(position);
 //        Device device = new Device(deviceList.get(position));
         Intent intent = new Intent(SearchDeviceActivity.this, BindingDeviceActivity.class);
         intent.putExtra("mac", device.getMacAddress());

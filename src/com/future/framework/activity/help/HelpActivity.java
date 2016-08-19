@@ -22,6 +22,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
@@ -44,6 +47,9 @@ public class HelpActivity extends BaseActivity implements OnClickListener {
 
 	/** The btn DeviceHelp. */
 	private Button DeviceHelp;
+	private LinearLayout step1;
+	private ScrollView step2;
+	private ImageView tv_help;
 
 	/* (non-Javadoc)
 	 * @see com.gizwits.framework.activity.BaseActivity#onCreate(android.os.Bundle)
@@ -73,6 +79,9 @@ public class HelpActivity extends BaseActivity implements OnClickListener {
 		ivBack = (ImageView) findViewById(R.id.ivBack);
 		AppHelp = (Button) findViewById(R.id.AppHelp);
 		DeviceHelp = (Button) findViewById(R.id.DeviceHelp);
+		step1 = (LinearLayout) findViewById(R.id.ll_step1);
+		step2 = (ScrollView) findViewById(R.id.ll_step2);
+		tv_help = (ImageView) findViewById(R.id.tv_help);
 
 	}
 
@@ -83,10 +92,22 @@ public class HelpActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ivBack:
-			onBackPressed();
+			if (step2.getVisibility() == View.GONE) {
+				onBackPressed();
+			}else{
+				step1.setVisibility(View.VISIBLE);
+				step2.setVisibility(View.GONE);
+			}
 			break;
-
-		default:
+		case R.id.AppHelp:
+			step1.setVisibility(View.GONE);
+			step2.setVisibility(View.VISIBLE);
+			tv_help.setImageResource(R.drawable.app_help);
+			break;
+		case R.id.DeviceHelp:
+			step1.setVisibility(View.GONE);
+			step2.setVisibility(View.VISIBLE);
+			tv_help.setImageResource(R.drawable.device_help);
 			break;
 		}
 

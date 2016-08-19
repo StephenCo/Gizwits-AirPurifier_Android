@@ -123,5 +123,6 @@ public class JsonKeys {
 //    public final static String Air_Quality = "Air_Quality";
     
     public final static String Pm25 = "Dust_Indoor";
+    public final static String Dust_Outdoor = "Dust_Outdoor";
 
 }

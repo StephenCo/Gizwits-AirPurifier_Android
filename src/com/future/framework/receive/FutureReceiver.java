@@ -16,36 +16,51 @@ import android.os.Bundle;
 import android.util.Log;
 import cn.jpush.android.api.JPushInterface;
 
+import com.future.framework.activity.FlushActivity;
 import com.future.framework.sdk.SettingManager;
 
-public class FutureReceiver extends BroadcastReceiver{
-public static final String TAG="MySunRainReceiver";
+public class FutureReceiver extends BroadcastReceiver {
+	public static final String TAG = "MySunRainReceiver";
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
-	
 
-		  Bundle bundle = intent.getExtras();
-			Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
-			
-	        if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
-	            String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-	            Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
-		           new SettingManager(context).setJRID(regId);
-	        } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-	        	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
-	        } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-	            Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
-	        } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-	            Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-	        } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
-	            Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
-	        } else if(JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
-	        	boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
-	        	Log.w(TAG, "[MyReceiver]" + intent.getAction() +" connected state change to "+connected);
-	        } else {
-	        	Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
-	        }
-	
+		Bundle bundle = intent.getExtras();
+		Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction()
+				+ ", extras: " + printBundle(bundle));
+
+		if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
+			String regId = bundle
+					.getString(JPushInterface.EXTRA_REGISTRATION_ID);
+			Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
+			new SettingManager(context).setJRID(regId);
+		} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent
+				.getAction())) {
+			Log.d(TAG,
+					"[MyReceiver] 接收到推送下来的自定义消息: "
+							+ bundle.getString(JPushInterface.EXTRA_MESSAGE));
+		} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent
+				.getAction())) {
+			Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
+		} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent
+				.getAction())) {
+			Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+			openApp(context);
+		} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent
+				.getAction())) {
+			Log.d(TAG,
+					"[MyReceiver] 用户收到到RICH PUSH CALLBACK: "
+							+ bundle.getString(JPushInterface.EXTRA_EXTRA));
+		} else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent
+				.getAction())) {
+			boolean connected = intent.getBooleanExtra(
+					JPushInterface.EXTRA_CONNECTION_CHANGE, false);
+			Log.w(TAG, "[MyReceiver]" + intent.getAction()
+					+ " connected state change to " + connected);
+		} else {
+			Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
+		}
+
 	}
 
 	// 打印所有的 intent extra 数据
@@ -54,7 +69,7 @@ public static final String TAG="MySunRainReceiver";
 		for (String key : bundle.keySet()) {
 			if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
 				sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
-			}else if(key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)){
+			} else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
 				sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
 			} else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
 				if (bundle.getString(JPushInterface.EXTRA_EXTRA).isEmpty()) {
@@ -63,13 +78,14 @@ public static final String TAG="MySunRainReceiver";
 				}
 
 				try {
-					JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
-					Iterator<String> it =  json.keys();
+					JSONObject json = new JSONObject(
+							bundle.getString(JPushInterface.EXTRA_EXTRA));
+					Iterator<String> it = json.keys();
 
 					while (it.hasNext()) {
 						String myKey = it.next().toString();
-						sb.append("\nkey:" + key + ", value: [" +
-								myKey + " - " +json.optString(myKey) + "]");
+						sb.append("\nkey:" + key + ", value: [" + myKey + " - "
+								+ json.optString(myKey) + "]");
 					}
 				} catch (JSONException e) {
 					Log.e(TAG, "Get message extra JSON error!");
@@ -81,16 +97,23 @@ public static final String TAG="MySunRainReceiver";
 		}
 		return sb.toString();
 	}
-	
+
 	public boolean isAppForground(Context mContext) {
-	    ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-	    List<RunningTaskInfo> tasks = am.getRunningTasks(1);
-	    if (!tasks.isEmpty()) {
-	        ComponentName topActivity = tasks.get(0).topActivity;
-	        if (!topActivity.getPackageName().equals(mContext.getPackageName())) {
-	            return false;
-	        }
-	    }
-	    return true;
+		ActivityManager am = (ActivityManager) mContext
+				.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningTaskInfo> tasks = am.getRunningTasks(1);
+		if (!tasks.isEmpty()) {
+			ComponentName topActivity = tasks.get(0).topActivity;
+			if (!topActivity.getPackageName().equals(mContext.getPackageName())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void openApp(Context context) {
+		Intent mIntent = new Intent(context, FlushActivity.class);
+		mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(mIntent);
 	}
 }

@@ -44,6 +44,7 @@ import android.widget.RelativeLayout;
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.device.DeviceListActivity;
+import com.future.framework.config.GizwitsErrorMsg;
 import com.google.zxing.Result;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.ui.utils.ToastUtils;
@@ -292,15 +293,14 @@ public final class CaptureActivity extends BaseActivity implements
 	}
 
 	@Override
-	protected void didBindDevice(int error, String errorMessage, String did) {
-		Log.d("扫描结果", "error=" + error + ";errorMessage=" + errorMessage
-				+ ";did=" + did);
+	protected void didBindDevice(int error, String did) {
+		Log.d("扫描结果", "error=" + error + ";did=" + did);
 		if (error == 0) {
 			mHandler.sendEmptyMessage(handler_key.SUCCESS.ordinal());
 		} else {
 			Message message = new Message();
 			message.what = handler_key.FAILED.ordinal();
-			message.obj = errorMessage;
+			message.obj = GizwitsErrorMsg.getEqual(error).getCHNDescript();
 			mHandler.sendMessage(message);
 		}
 	}

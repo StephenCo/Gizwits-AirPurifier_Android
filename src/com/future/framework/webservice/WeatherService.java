@@ -15,7 +15,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
  */
 public abstract class WeatherService {
 
-	private final String requestUrl = "http://api.map.baidu.com/telematics/v3/weather?output=json&ak=DV1mGK81DZqAAbF4jro2LA33hcDYI3Qm&location=";
+	private final String requestUrl = "http://api.map.baidu.com/telematics/v3/weather?output=json&ak=2xRH3IUxsu04KOaYwxjIzKxwGXFX6bdM&location=";
 
 	
 	public abstract void onSuccess(JSONObject data);

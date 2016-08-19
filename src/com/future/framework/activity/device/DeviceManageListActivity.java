@@ -1,5 +1,5 @@
 /**
- * Project Name:XPGSdkV4AppBase
+ * Project Name:GizSdkV4AppBase
  * File Name:DeviceManageListActivity.java
  * Package Name:com.gizwits.framework.activity.device
  * Date:2015-1-27 14:45:30
@@ -32,8 +32,8 @@ import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.onboarding.SearchDeviceActivity;
 import com.future.framework.adapter.ManageListAdapter;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.system.IntentUtils;
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -58,7 +58,7 @@ public class DeviceManageListActivity extends BaseActivity implements OnClickLis
     private ImageView ivAdd;
 
     /** The Device device list. */
-    private List<XPGWifiDevice> devices;
+    private List<GizWifiDevice> devices;
 
     /** The m adapter. */
     ManageListAdapter mAdapter;
@@ -84,7 +84,7 @@ public class DeviceManageListActivity extends BaseActivity implements OnClickLis
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // TODO Auto-generated method stub
-                XPGWifiDevice device = bindlist.get(position);
+                GizWifiDevice device = bindlist.get(position);
                     Intent intent = new Intent(DeviceManageListActivity.this,
                             DeviceManageDetailActivity.class);
                     intent.putExtra("mac", device.getMacAddress());
@@ -124,8 +124,8 @@ public class DeviceManageListActivity extends BaseActivity implements OnClickLis
 	@Override
     public void onBackPressed() {
 		boolean isNoOnLineDevice = true;
-		for (XPGWifiDevice xpgDevice : bindlist) {
-			if (xpgDevice.isOnline())
+		for (GizWifiDevice GizDevice : bindlist) {
+			if (GizDevice.isOnline())
 				isNoOnLineDevice = false;
 		}
 

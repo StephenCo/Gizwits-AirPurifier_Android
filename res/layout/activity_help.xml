@@ -28,36 +28,66 @@
             android:textSize="22sp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/AppHelp"
+    <LinearLayout
+        android:id="@+id/ll_step1"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="#FFFFFF"
-        android:drawableRight="@drawable/arrow_right_gray"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:text="@string/help_for_app" />
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:orientation="vertical" >
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#969696" />
+        <Button
+            android:id="@+id/AppHelp"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="#FFFFFF"
+            android:drawableRight="@drawable/arrow_right_gray"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/help_for_app" />
 
-    <Button
-        android:id="@+id/DeviceHelp"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="#FFFFFF"
-        android:drawableRight="@drawable/arrow_right_gray"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:text="@string/help_for_device" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#969696" />
 
-    <View
+        <Button
+            android:id="@+id/DeviceHelp"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="#FFFFFF"
+            android:drawableRight="@drawable/arrow_right_gray"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/help_for_device" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#969696" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/ll_step2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#969696" />
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:layout_marginTop="-100dp">
+
+            <ImageView
+                android:id="@+id/tv_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+				android:src="@drawable/app_help" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

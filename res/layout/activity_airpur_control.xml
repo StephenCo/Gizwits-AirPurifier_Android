@@ -118,7 +118,7 @@
                     android:layout_height="40dp"
                     android:layout_alignParentTop="true"
                     android:gravity="center"
-                    android:text="PM2.5"
+                    android:text="室内 PM2.5"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
@@ -181,21 +181,21 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@drawable/anion_not_select" />
+                            android:src="@drawable/main_icon_anion_off" />
 
                         <ImageView
                             android:id="@+id/childLock_iv"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@drawable/lock_not_select" />
+                            android:src="@drawable/main_icon_lock_off" />
 
                         <ImageView
                             android:id="@+id/qualityLight_iv"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@drawable/quality_not_select" />
+                            android:src="@drawable/main_icon_gate_off" />
                     </LinearLayout>
 
                     <ImageView
@@ -246,7 +246,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="PM 2.5"
+                                android:text="室外 PM2.5"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -303,7 +303,7 @@
                             android:id="@+id/silent_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/icon_sleep_not_select"
+                            android:background="@drawable/icon_sleep"
                             android:scaleType="centerInside" />
 
                         <View
@@ -315,7 +315,7 @@
                             android:id="@+id/standar_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/icon_standard_not_select"
+                            android:background="@drawable/icon_comfort"
                             android:scaleType="centerInside" />
 
                         <View
@@ -327,7 +327,7 @@
                             android:id="@+id/strong_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/icon_strong_not_select"
+                            android:background="@drawable/icon_auto"
                             android:scaleType="centerInside" />
 
                         <View
@@ -339,7 +339,7 @@
                             android:id="@+id/auto_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/icon_intelligence_not_select"
+                            android:background="@drawable/icon_speed"
                             android:scaleType="centerInside" />
 
                         <View
@@ -420,7 +420,7 @@
                             android:id="@+id/plasmaO_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_3" />
+                            android:src="@drawable/bottom_icon_anion_off" />
 
                         <TextView
                             android:id="@+id/plasmaO_tv"
@@ -440,7 +440,7 @@
                             android:id="@+id/childLockO_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_2" />
+                            android:src="@drawable/bottom_icon_lock_off" />
 
                         <TextView
                             android:id="@+id/childLockO_tv"
@@ -460,7 +460,7 @@
                             android:id="@+id/qualityLightO_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_1" />
+                            android:src="@drawable/bottom_icon_gate_off" />
 
                         <TextView
                             android:id="@+id/qualityLightO_tv"
@@ -480,7 +480,7 @@
                             android:id="@+id/timingOff_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_4" />
+                            android:src="@drawable/bottom_icon_switch_off" />
 
                         <TextView
                             android:id="@+id/timingOff_tv"

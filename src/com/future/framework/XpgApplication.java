@@ -26,6 +26,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.future.framework.config.Configs;
 import com.future.framework.listeners.MyLocationListener;
+import com.gizwits.gizwifisdk.api.GizWifiSDK;
 import com.xpg.common.useful.NetworkUtils;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
@@ -48,11 +49,10 @@ public class XpgApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		// 初始化sdk,传入appId,登录机智云官方网站查看产品信息获得 AppID
-		XPGWifiSDK.sharedInstance().startWithAppID(getApplicationContext(),
+		GizWifiSDK.sharedInstance().startWithAppID(getApplicationContext(),
 				Configs.APPID);
 		// 设定日志打印级别,日志保存文件名，是否在后台打印数据.
-		XPGWifiSDK.sharedInstance().setLogLevel(Configs.LOG_LEVEL,
-				"BassApp.log", Configs.DEBUG);
+		GizWifiSDK.sharedInstance().setLogLevel(Configs.LOG_LEVEL);
 		
         JPushInterface.init(this);
 		

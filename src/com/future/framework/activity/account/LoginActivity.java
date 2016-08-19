@@ -33,11 +33,12 @@ import android.widget.Toast;
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.device.DeviceListActivity;
+import com.future.framework.config.GizwitsErrorMsg;
 import com.future.framework.receive.PushServer;
+import com.future.framework.utils.StringUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.common.useful.NetworkUtils;
-import com.xpg.common.useful.StringUtils;
 import com.xpg.ui.utils.ToastUtils;
 
 // TODO: Auto-generated Javadoc
@@ -263,9 +264,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	protected void didUserLogin(int error, String errorMessage, String uid,
+	protected void didUserLogin(int error, String uid,
 			String token) {
-		if (!uid.isEmpty() && !token.isEmpty()) {// 登陆成功
+		if (!StringUtils.isEmpty(uid) && !StringUtils.isEmpty(token)) {// 登陆成功
 			setmanager.setUserName(etName.getText().toString().trim());
 			setmanager.setPassword(etPsw.getText().toString().trim());
 			setmanager.setUid(uid);
@@ -274,7 +275,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		} else {// 登陆失败
 			Message msg = new Message();
 			msg.what = handler_key.LOGIN_FAIL.ordinal();
-			msg.obj = errorMessage;
+			msg.obj = GizwitsErrorMsg.getEqual(error).getCHNDescript();
 			handler.sendMessage(msg);
 		}
 	}

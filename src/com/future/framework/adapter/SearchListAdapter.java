@@ -1,5 +1,5 @@
 /**
- * Project Name:XPGSdkV4AppBase
+ * Project Name:GizSdkV4AppBase
  * File Name:SearchListAdapter.java
  * Package Name:com.gizwits.framework.adapter
  * Date:2015-1-27 14:46:58
@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.future.airpurifier.R;
 import com.future.framework.sdk.SettingManager;
 import com.future.framework.utils.StringUtils;
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -56,7 +56,7 @@ public class SearchListAdapter extends BaseAdapter {
 	private int i = 0;
 
 	/** The current devices. */
-	private List<XPGWifiDevice> currentDevices;
+	private List<GizWifiDevice> currentDevices;
 
 	/**
 	 * 设备列表数据适配器构造方法(Wifi查询数据列表).
@@ -66,7 +66,7 @@ public class SearchListAdapter extends BaseAdapter {
 	 * @param list
 	 *            设备列表
 	 */
-	public SearchListAdapter(Context c, List<XPGWifiDevice> list) {
+	public SearchListAdapter(Context c, List<GizWifiDevice> list) {
 		this.i = 0;
 		this.context = c;
 		this.inflater = LayoutInflater.from(context);
@@ -80,14 +80,14 @@ public class SearchListAdapter extends BaseAdapter {
 	 * @param devices
 	 *            the devices
 	 */
-	private void changedatas(List<XPGWifiDevice> devices) {
+	private void changedatas(List<GizWifiDevice> devices) {
 		if (currentDevices != null && currentDevices.size() > 0) {
 			currentDevices.clear();
 		} else {
-			currentDevices = new ArrayList<XPGWifiDevice>();
+			currentDevices = new ArrayList<GizWifiDevice>();
 		}
 		currentDevices = devices;
-		// for (XPGWifiDevice device : devices) {
+		// for (GizWifiDevice device : devices) {
 		//
 		// if (device.isLAN() && !device.isBind(setManager.getUid())) {
 		// currentDevices.add(device);
@@ -136,7 +136,7 @@ public class SearchListAdapter extends BaseAdapter {
 	 *            the position
 	 * @return the device
 	 */
-	public XPGWifiDevice getDevice(int position) {
+	public GizWifiDevice getDevice(int position) {
 		return currentDevices.get(position);
 	}
 
@@ -157,7 +157,7 @@ public class SearchListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		XPGWifiDevice device = currentDevices.get(position);
+		GizWifiDevice device = currentDevices.get(position);
 		
 		String DeviceName = "";
 		String macAddress = device.getMacAddress();

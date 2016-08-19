@@ -1,7 +1,7 @@
 /**
- * Project Name:XPGSdkV4AppBase
+ * Project Name:GizSdkV4AppBase
  * File Name:DeviceListActivity.java
- * Package Name:com.gizwits.framework.activity.device
+ * Package Name:com.wits.framework.activity.device
  * Date:2015-1-27 14:45:18
  * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
@@ -36,6 +36,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+
 import com.future.airpurifier.R;
 import com.future.airpurifier.activity.control.AirPurActivity;
 import com.future.framework.activity.BaseActivity;
@@ -44,11 +45,12 @@ import com.future.framework.activity.onboarding.BindingDeviceActivity;
 import com.future.framework.activity.onboarding.SearchDeviceActivity;
 import com.future.framework.adapter.DeviceListAdapter;
 import com.future.framework.utils.DialogManager;
+import com.future.framework.utils.StringUtils;
 import com.future.framework.widget.RefreshableListView;
 import com.future.framework.widget.RefreshableListView.OnRefreshListener;
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.ui.utils.ToastUtils;
-import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 // TODO: Auto-generated Javadoc
 //TODO: Auto-generated Javadoc
@@ -173,7 +175,7 @@ public class DeviceListActivity extends BaseActivity implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.gizwits.framework.activity.BaseActivity#onCreate(android.os.Bundle)
+	 * com.wits.framework.activity.BaseActivity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -193,12 +195,12 @@ public class DeviceListActivity extends BaseActivity implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gizwits.framework.activity.BaseActivity#onResume()
+	 * @see com.wits.framework.activity.BaseActivity#onResume()
 	 */
 	@Override
 	public void onResume() {
 		super.onResume();
-		deviceListAdapter.changeDatas(new ArrayList<XPGWifiDevice>());
+		deviceListAdapter.changeDatas(new ArrayList<GizWifiDevice>());
 		
 		if (getIntent().getBooleanExtra("isbind", false)) {
 
@@ -229,7 +231,7 @@ public class DeviceListActivity extends BaseActivity implements
 		ivAdd = (ImageView) findViewById(R.id.ivAdd);
 		lvDevices = (RefreshableListView) findViewById(R.id.lvDevices);
 
-		// deviceList = new ArrayList<XPGWifiDevice>();
+		// deviceList = new ArrayList<GizWifiDevice>();
 		deviceListAdapter = new DeviceListAdapter(this, deviceslist);
 		lvDevices.setAdapter(deviceListAdapter);
 		lvDevices.setOnRefreshListener(new OnRefreshListener() {
@@ -306,7 +308,7 @@ public class DeviceListActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		XPGWifiDevice tempDevice = deviceListAdapter
+		GizWifiDevice tempDevice = deviceListAdapter
 				.getDeviceByPosition(position);
 		if (tempDevice == null) {
 			return;
@@ -357,32 +359,32 @@ public class DeviceListActivity extends BaseActivity implements
 	/**
 	 * 登陆设备
 	 * 
-	 * @param xpgWifiDevice
-	 *            the xpg wifi device
+	 * @param GizWifiDevice
+	 *            the Giz wifi device
 	 */
-	private void loginDevice(XPGWifiDevice xpgWifiDevice) {
+	private void loginDevice(GizWifiDevice GizWifiDevice) {
 		DialogManager.showDialog(DeviceListActivity.this, progressDialog);
-		mXpgWifiDevice = xpgWifiDevice;
-		mXpgWifiDevice.setListener(deviceListener);
-		if(mXpgWifiDevice.isConnected()){
+		mGizWifiDevice = GizWifiDevice;
+		mGizWifiDevice.setListener(deviceListener);
+		if(mGizWifiDevice.isConnected()){
 			handler.sendEmptyMessage(handler_key.LOGIN_SUCCESS.ordinal());
 		}else{
 			handler.sendEmptyMessageDelayed(handler_key.LOGIN_TIMEOUT.ordinal(), LoginDeviceTimeOut);
-			mXpgWifiDevice.login(setmanager.getUid(), setmanager.getToken());
+			mGizWifiDevice.login(setmanager.getUid(), setmanager.getToken());
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gizwits.framework.activity.BaseActivity#didLogin(com.xtremeprog.
-	 * xpgconnect.XPGWifiDevice, int)
+	 * @see com.wits.framework.activity.BaseActivity#didLogin(com.xtremeprog.
+	 * Gizconnect.GizWifiDevice, int)
 	 */
 	@Override
-	protected void didLogin(XPGWifiDevice device, int result) {
+	protected void didLogin(GizWifiDevice device, int result) {
 		handler.removeMessages(handler_key.LOGIN_TIMEOUT.ordinal());
 		if (result == 0) {
-			mXpgWifiDevice = device;
+			mGizWifiDevice = device;
 			handler.sendEmptyMessage(handler_key.LOGIN_SUCCESS.ordinal());
 		} else {
 			handler.sendEmptyMessage(handler_key.LOGIN_FAIL.ordinal());
@@ -404,19 +406,19 @@ public class DeviceListActivity extends BaseActivity implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gizwits.framework.activity.BaseActivity#didDiscovered(int,
+	 * @see com.wits.framework.activity.BaseActivity#didDiscovered(int,
 	 * java.util.List)
 	 */
 	@Override
-	protected void didDiscovered(int error, List<XPGWifiDevice> deviceList) {
+	protected void didDiscovered(int error, List<GizWifiDevice> deviceList) {
 		deviceslist = deviceList;
 		handler.sendEmptyMessage(handler_key.FOUND.ordinal());
 
 	}
 
 	@Override
-	protected void didDisconnected(XPGWifiDevice device) {
-		if (mXpgWifiDevice.getDid().equals(device.getDid())) {
+	protected void didDisconnected(GizWifiDevice device) {
+		if (mGizWifiDevice.getDid().equals(device.getDid())) {
 			handler.sendEmptyMessage(handler_key.LOGIN_FAIL.ordinal());
 		}
 	}
@@ -424,13 +426,13 @@ public class DeviceListActivity extends BaseActivity implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gizwits.framework.activity.BaseActivity#didUserLogin(int,
+	 * @see com.wits.framework.activity.BaseActivity#didUserLogin(int,
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	protected void didUserLogin(int error, String errorMessage, String uid,
+	protected void didUserLogin(int error, String uid,
 			String token) {
-		if (!uid.isEmpty() && !token.isEmpty()) {// 登陆成功
+		if (!StringUtils.isEmpty(uid) && !StringUtils.isEmpty(token)) {// 登陆成功
 			setmanager.setUid(uid);
 			setmanager.setToken(token);
 		}
