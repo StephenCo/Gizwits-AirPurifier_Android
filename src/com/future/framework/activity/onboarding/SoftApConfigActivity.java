@@ -43,9 +43,9 @@ import android.widget.ToggleButton;
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.device.DeviceListActivity;
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.common.useful.NetworkUtils;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -432,7 +432,7 @@ public class SoftApConfigActivity extends BaseActivity implements OnClickListene
 	 * com.xtremeprog.xpgconnect.XPGWifiDevice)
 	 */
 	@Override
-	protected void didSetDeviceWifi(int error, GizWifiDevice device) {
+	protected void didSetDeviceWifi(int error, XPGWifiDevice device) {
 		if (error == 0) {
 			handler.sendEmptyMessage(handler_key.CONFIG_SUCCESS.ordinal());
 		} else {

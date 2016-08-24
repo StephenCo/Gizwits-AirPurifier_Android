@@ -17,7 +17,8 @@
  */
 package com.future.framework.config;
 
-import com.gizwits.gizwifisdk.enumration.GizLogPrintLevel;
+import com.xtremeprog.xpgconnect.XPGWifiSDK;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.GizLogPrintLevel;
 
 
 
@@ -41,7 +42,7 @@ public class Configs {
 	public static final String PRODUCT_KEY = "4ca85f77698247d8b13f03fdf2c36657";
 	// 设定日志打印级别
 
-	public static final GizLogPrintLevel LOG_LEVEL = GizLogPrintLevel.GizLogPrintAll;
+	public static final XPGWifiSDK.GizLogPrintLevel LOG_LEVEL = GizLogPrintLevel.GizLogPrintAll;
 	
 	public static String city;
 	

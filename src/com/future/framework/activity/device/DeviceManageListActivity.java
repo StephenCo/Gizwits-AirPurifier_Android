@@ -1,7 +1,7 @@
 /**
- * Project Name:GizSdkV4AppBase
+ * Project Name:XPGSdkV4AppBase
  * File Name:DeviceManageListActivity.java
- * Package Name:com.gizwits.framework.activity.device
+ * Package Name:com.XPGwits.framework.activity.device
  * Date:2015-1-27 14:45:30
  * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
@@ -32,8 +32,8 @@ import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.onboarding.SearchDeviceActivity;
 import com.future.framework.adapter.ManageListAdapter;
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.system.IntentUtils;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -58,13 +58,13 @@ public class DeviceManageListActivity extends BaseActivity implements OnClickLis
     private ImageView ivAdd;
 
     /** The Device device list. */
-    private List<GizWifiDevice> devices;
+    private List<XPGWifiDevice> devices;
 
     /** The m adapter. */
     ManageListAdapter mAdapter;
 
     /* (non-Javadoc)
-     * @see com.gizwits.framework.activity.BaseActivity#onCreate(android.os.Bundle)
+     * @see com.XPGwits.framework.activity.BaseActivity#onCreate(android.os.Bundle)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class DeviceManageListActivity extends BaseActivity implements OnClickLis
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // TODO Auto-generated method stub
-                GizWifiDevice device = bindlist.get(position);
+                XPGWifiDevice device = bindlist.get(position);
                     Intent intent = new Intent(DeviceManageListActivity.this,
                             DeviceManageDetailActivity.class);
                     intent.putExtra("mac", device.getMacAddress());
@@ -124,8 +124,8 @@ public class DeviceManageListActivity extends BaseActivity implements OnClickLis
 	@Override
     public void onBackPressed() {
 		boolean isNoOnLineDevice = true;
-		for (GizWifiDevice GizDevice : bindlist) {
-			if (GizDevice.isOnline())
+		for (XPGWifiDevice XPGDevice : bindlist) {
+			if (XPGDevice.isOnline())
 				isNoOnLineDevice = false;
 		}
 

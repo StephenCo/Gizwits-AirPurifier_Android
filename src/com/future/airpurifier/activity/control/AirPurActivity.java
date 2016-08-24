@@ -58,9 +58,9 @@ import com.future.framework.webservice.WeatherService;
 import com.future.framework.widget.AboutVersionActivity;
 import com.future.framework.widget.SlidingMenu;
 import com.future.framework.widget.SlidingMenu.SlidingMenuListener;
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.common.useful.DateUtil;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 public class AirPurActivity extends BaseActivity implements OnClickListener, OnTouchListener, SlidingMenuListener {
 	private final String TAG = "AirPurActivity";
@@ -220,14 +220,14 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 		initBindList();
 		mAdapter.setChoosedPos(-1);
 		for (int i = 0; i < bindlist.size(); i++) {
-			if (bindlist.get(i).getDid().equalsIgnoreCase(mGizWifiDevice.getDid()))
+			if (bindlist.get(i).getDid().equalsIgnoreCase(mXPGWifiDevice.getDid()))
 				mAdapter.setChoosedPos(i);
 		}
 
 		// 当前绑定列表没有当前操作设备
 		if (mAdapter.getChoosedPos() == -1) {
 			mAdapter.setChoosedPos(0);
-			mGizWifiDevice = mAdapter.getItem(0);
+			mXPGWifiDevice = mAdapter.getItem(0);
 		}
 
 		mAdapter.notifyDataSetChanged();
@@ -243,7 +243,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	 * @return void
 	 */
 	private void refreshMainControl() {
-		mGizWifiDevice.setListener(deviceListener);
+		mXPGWifiDevice.setListener(deviceListener);
 		DialogManager.showDialog(this, progressDialogRefreshing);
 		handler.sendEmptyMessageDelayed(handler_key.GET_STATUE_TIMEOUT.ordinal(), GetStatueTimeOut);
 		handler.sendEmptyMessage(handler_key.GET_STATUE.ordinal());
@@ -265,8 +265,8 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 		if (mView.isOpen()) {
 			mView.toggle();
 		} else {
-			if (mGizWifiDevice != null && mGizWifiDevice.isConnected()) {
-				mCenter.cDisconnect(mGizWifiDevice);
+			if (mXPGWifiDevice != null && mXPGWifiDevice.isConnected()) {
+				mCenter.cDisconnect(mXPGWifiDevice);
 				DisconnectOtherDevice();
 			}
 			finish();
@@ -285,14 +285,14 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	}
 
 	@Override
-	protected void didDisconnected(GizWifiDevice device) {
+	protected void didDisconnected(XPGWifiDevice device) {
 		super.didDisconnected(device);
 	}
 
 	@Override
-	protected void didReceiveData(GizWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
+	protected void didReceiveData(XPGWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int result) {
 		Log.e(TAG, "didReceiveData");
-		if (!device.getDid().equalsIgnoreCase(mGizWifiDevice.getDid()))
+		if (!device.getDid().equalsIgnoreCase(mXPGWifiDevice.getDid()))
 			return;
 
 		this.deviceDataMap = dataMap;
@@ -396,7 +396,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				if (mAdapter.getChoosedPos() != position) {
 					isAlarmList.clear();
 					mAdapter.setChoosedPos(position);
-					mGizWifiDevice = bindlist.get(position);
+					mXPGWifiDevice = bindlist.get(position);
 				}
 
 				mView.toggle();
@@ -498,10 +498,10 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			break;
 		case R.id.childLockO_ll:
 			if (childLockO_ll.getTag().toString() == "0") {
-				mCenter.cChildLock(mGizWifiDevice, false);
+				mCenter.cChildLock(mXPGWifiDevice, false);
 				setChildLock(false);
 			} else {
-				mCenter.cChildLock(mGizWifiDevice, true);
+				mCenter.cChildLock(mXPGWifiDevice, true);
 				setChildLock(true);
 			}
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
@@ -510,10 +510,10 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			break;
 		case R.id.plasmaO_ll:
 			if (palasmaO_ll.getTag().toString() == "0") {
-				mCenter.cSwitchPlasma(mGizWifiDevice, false);
+				mCenter.cSwitchPlasma(mXPGWifiDevice, false);
 				setPlasma(false);
 			} else {
-				mCenter.cSwitchPlasma(mGizWifiDevice, true);
+				mCenter.cSwitchPlasma(mXPGWifiDevice, true);
 				setPlasma(true);
 			}
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
@@ -522,10 +522,10 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			break;
 		case R.id.qualityLightO_ll:
 			if (qualityLightO_ll.getTag().toString() == "0") {
-				mCenter.cTap(mGizWifiDevice, false);
+				mCenter.cTap(mXPGWifiDevice, false);
 				setIndicatorLight(false);
 			} else {
-				mCenter.cTap(mGizWifiDevice, true);
+				mCenter.cTap(mXPGWifiDevice, true);
 				setIndicatorLight(true);
 			}
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
@@ -538,8 +538,8 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				@Override
 				public void timingChosen(int time) {
 					// 设置定时开机时间
-//					mCenter.cCountDownOff(mGizWifiDevice, DateUtil.hourCastToMin(time));
-					mCenter.cCountDownOff(mGizWifiDevice, time);
+//					mCenter.cCountDownOff(mXPGWifiDevice, DateUtil.hourCastToMin(time));
+					mCenter.cCountDownOff(mXPGWifiDevice, time);
 					handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 					isAntiShake = true;
 					handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
@@ -555,8 +555,8 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			}, " 定时关机", timingOff == 0 ? 8 : timingOff - 1).show();
 			break;
 		case R.id.turnOn_iv:
-			mCenter.cSwitchOn(mGizWifiDevice, true);
-			mCenter.cDustOutdoor(mGizWifiDevice, Integer.parseInt(pm25_tv.getText().toString()));
+			mCenter.cSwitchOn(mXPGWifiDevice, true);
+			mCenter.cDustOutdoor(mXPGWifiDevice, Integer.parseInt(pm25_tv.getText().toString()));
 			setSwitch(true);
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 			isAntiShake = true;
@@ -568,7 +568,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				@Override
 				public void timingChosen(int time) {
 					// 设置定时开机时间
-					mCenter.cCountDownOn(mGizWifiDevice, DateUtil.hourCastToMin(time));
+					mCenter.cCountDownOn(mXPGWifiDevice, DateUtil.hourCastToMin(time));
 					handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 					isAntiShake = true;
 					handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
@@ -591,7 +591,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					mCenter.cSwitchOn(mGizWifiDevice, false);
+					mCenter.cSwitchOn(mXPGWifiDevice, false);
 					handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 					isAntiShake = true;
 					handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
@@ -602,28 +602,28 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			powerDialog.show();
 			break;
 		case R.id.auto_iv:
-			mCenter.cSetSpeed(mGizWifiDevice, 1);
+			mCenter.cSetSpeed(mXPGWifiDevice, 1);
 			changeRUNmodeBg(1);
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 			isAntiShake = true;
 			handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
 			break;
 		case R.id.silent_iv:
-			mCenter.cSetSpeed(mGizWifiDevice, 2);
+			mCenter.cSetSpeed(mXPGWifiDevice, 2);
 			changeRUNmodeBg(2);
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 			isAntiShake = true;
 			handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
 			break;
 		case R.id.standar_iv:
-			mCenter.cSetSpeed(mGizWifiDevice, 3);
+			mCenter.cSetSpeed(mXPGWifiDevice, 3);
 			changeRUNmodeBg(3);
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 			isAntiShake = true;
 			handler.sendEmptyMessageDelayed(handler_key.ANTI_SHAKE.ordinal(), 2000);
 			break;
 		case R.id.strong_iv:
-			mCenter.cSetSpeed(mGizWifiDevice, 0);
+			mCenter.cSetSpeed(mXPGWifiDevice, 0);
 			changeRUNmodeBg(0);
 			handler.removeMessages(handler_key.ANTI_SHAKE.ordinal());
 			isAntiShake = true;
@@ -666,7 +666,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			IntentUtils.getInstance().startActivity(AirPurActivity.this, AdvancedActivity.class);
 			break;
 		case R.id.btnDeviceList:
-			mCenter.cDisconnect(mGizWifiDevice);
+			mCenter.cDisconnect(mXPGWifiDevice);
 			DisconnectOtherDevice();
 			IntentUtils.getInstance().startActivity(AirPurActivity.this, DeviceListActivity.class);
 			finish();
@@ -680,10 +680,10 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	 * @return void
 	 */
 	private void backToMain() {
-		mGizWifiDevice = mAdapter.getItem(mAdapter.getChoosedPos());
+		mXPGWifiDevice = mAdapter.getItem(mAdapter.getChoosedPos());
 
-		if (!mGizWifiDevice.isConnected()) {
-			loginDevice(mGizWifiDevice);
+		if (!mXPGWifiDevice.isConnected()) {
+			loginDevice(mXPGWifiDevice);
 			DialogManager.showDialog(this, progressDialogRefreshing);
 		}
 
@@ -693,14 +693,14 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	/**
 	 * Login device.
 	 * 
-	 * @param GizWifiDevice
-	 *            the Giz wifi device
+	 * @param XPGWifiDevice
+	 *            the XPG wifi device
 	 */
-	private void loginDevice(GizWifiDevice GizWifiDevice) {
-		mGizWifiDevice = GizWifiDevice;
+	private void loginDevice(XPGWifiDevice XPGWifiDevice) {
+		mXPGWifiDevice = XPGWifiDevice;
 
-		mGizWifiDevice.setListener(deviceListener);
-		mGizWifiDevice.login(setmanager.getUid(), setmanager.getToken());
+		mXPGWifiDevice.setListener(deviceListener);
+		mXPGWifiDevice.login(setmanager.getUid(), setmanager.getToken());
 		isTimeOut = false;
 		handler.sendEmptyMessageDelayed(handler_key.LOGIN_TIMEOUT.ordinal(), LoginTimeOut);
 	}
@@ -708,11 +708,11 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gizwits.framework.activity.BaseActivity#didLogin(com.xtremeprog.
-	 * Gizconnect.GizWifiDevice, int)
+	 * @see com.XPGwits.framework.activity.BaseActivity#didLogin(com.xtremeprog.
+	 * XPGconnect.XPGWifiDevice, int)
 	 */
 	@Override
-	protected void didLogin(GizWifiDevice device, int result) {
+	protected void didLogin(XPGWifiDevice device, int result) {
 		if (isTimeOut)
 			return;
 
@@ -731,11 +731,11 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	 *            the mac
 	 * @param did
 	 *            the did
-	 * @return the Giz wifi device
+	 * @return the XPG wifi device
 	 */
 	private void DisconnectOtherDevice() {
-		for (GizWifiDevice theDevice : bindlist) {
-			if (theDevice.isConnected() && !theDevice.getDid().equalsIgnoreCase(mGizWifiDevice.getDid()))
+		for (XPGWifiDevice theDevice : bindlist) {
+			if (theDevice.isConnected() && !theDevice.getDid().equalsIgnoreCase(mXPGWifiDevice.getDid()))
 				mCenter.cDisconnect(theDevice);
 		}
 	}
@@ -1197,7 +1197,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 				}
 				break;
 			case GET_STATUE:
-				mCenter.cGetStatus(mGizWifiDevice);
+				mCenter.cGetStatus(mXPGWifiDevice);
 				break;
 			case GET_STATUE_TIMEOUT:
 				handler.sendEmptyMessage(handler_key.DISCONNECTED.ordinal());
@@ -1217,7 +1217,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 			case GET_WEATHER:
 				int pm = (Integer) msg.obj;
 				pm25_tv.setText(""+pm);
-				mCenter.cDustOutdoor(mGizWifiDevice, Integer.parseInt(pm25_tv.getText().toString()));
+				mCenter.cDustOutdoor(mXPGWifiDevice, Integer.parseInt(pm25_tv.getText().toString()));
 				if (pm < 35) {
 					outdoorQuality_tv.setText("优");
 				} else if(pm < 75) {
@@ -1282,7 +1282,7 @@ public class AirPurActivity extends BaseActivity implements OnClickListener, OnT
 	}
 	
 	@Override
-	protected void didDiscovered(int error, List<GizWifiDevice> devicesList) {
+	protected void didDiscovered(int error, List<XPGWifiDevice> devicesList) {
 		// TODO Auto-generated method stub
 		super.didDiscovered(error, devicesList);
 	}

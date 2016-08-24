@@ -1,7 +1,7 @@
 /**
- * Project Name:GizSdkV4AppBase
+ * Project Name:XPGSdkV4AppBase
  * File Name:DeviceListAdapter.java
- * Package Name:com.gizwits.framework.adapter
+ * Package Name:com.XPGwits.framework.adapter
  * Date:2015-1-27 14:46:51
  * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
@@ -34,7 +34,7 @@ import com.future.airpurifier.R;
 import com.future.framework.config.Configs;
 import com.future.framework.sdk.SettingManager;
 import com.future.framework.utils.StringUtils;
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 
 // TODO: Auto-generated Javadoc
@@ -90,22 +90,22 @@ public class DeviceListAdapter extends BaseAdapter {
     /**
      * The lan devices.
      */
-    List<GizWifiDevice> lanDevices;
+    List<XPGWifiDevice> lanDevices;
 
     /**
      * The wan devices.
      */
-    List<GizWifiDevice> wanDevices;
+    List<XPGWifiDevice> wanDevices;
 
     /**
      * The offline devices.
      */
-    List<GizWifiDevice> offlineDevices;
+    List<XPGWifiDevice> offlineDevices;
 
     /**
      * The un bind devices.
      */
-    List<GizWifiDevice> unBindDevices;
+    List<XPGWifiDevice> unBindDevices;
 
     /**
      * The m inflater.
@@ -113,7 +113,7 @@ public class DeviceListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
 
 //	/** The current devices. */
-//	private List<GizWifiDevice> currentDevices;
+//	private List<XPGWifiDevice> currentDevices;
 
     /**
      * The items.
@@ -131,15 +131,15 @@ public class DeviceListAdapter extends BaseAdapter {
      * @param context the context
      * @param devices the devices
      */
-    public DeviceListAdapter(Context context, List<GizWifiDevice> devices) {
+    public DeviceListAdapter(Context context, List<XPGWifiDevice> devices) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
         setManager = new SettingManager(context);
-        lanDevices = new ArrayList<GizWifiDevice>();
-        wanDevices = new ArrayList<GizWifiDevice>();
-        offlineDevices = new ArrayList<GizWifiDevice>();
-        unBindDevices = new ArrayList<GizWifiDevice>();
-        changeDatas(new ArrayList<GizWifiDevice>());
+        lanDevices = new ArrayList<XPGWifiDevice>();
+        wanDevices = new ArrayList<XPGWifiDevice>();
+        offlineDevices = new ArrayList<XPGWifiDevice>();
+        unBindDevices = new ArrayList<XPGWifiDevice>();
+        changeDatas(new ArrayList<XPGWifiDevice>());
     }
 
     /**
@@ -176,19 +176,19 @@ public class DeviceListAdapter extends BaseAdapter {
     class DeviceTypeItem extends TypeItem {
 
         /**
-         * The Giz wifi device.
+         * The XPG wifi device.
          */
-        GizWifiDevice GizWifiDevice;
+        XPGWifiDevice XPGWifiDevice;
 
         /**
          * Instantiates a new device type item.
          *
          * @param type          the type
-         * @param GizWifiDevice the Giz wifi device
+         * @param XPGWifiDevice the XPG wifi device
          */
-        public DeviceTypeItem(int type, GizWifiDevice GizWifiDevice) {
+        public DeviceTypeItem(int type, XPGWifiDevice XPGWifiDevice) {
             super(type);
-            this.GizWifiDevice = GizWifiDevice;
+            this.XPGWifiDevice = XPGWifiDevice;
         }
     }
 
@@ -365,10 +365,10 @@ public class DeviceListAdapter extends BaseAdapter {
         List<TypeItem> items = new ArrayList<TypeItem>();
         items.add(new HeaderTypeItem("在线设备"));
         if (lanDevices.size() > 0||wanDevices.size() > 0) {
-            for (GizWifiDevice device : lanDevices) {
+            for (XPGWifiDevice device : lanDevices) {
                 items.add(new DeviceTypeItem(VIEW_TYPE_LAN, device));
             }
-            for (GizWifiDevice device : wanDevices) {
+            for (XPGWifiDevice device : wanDevices) {
                 items.add(new DeviceTypeItem(VIEW_TYPE_WAN, device));
             } 
         } else {
@@ -376,7 +376,7 @@ public class DeviceListAdapter extends BaseAdapter {
         }
         items.add(new HeaderTypeItem("离线设备"));
         if (offlineDevices.size() > 0) {
-            for (GizWifiDevice device : offlineDevices) {
+            for (XPGWifiDevice device : offlineDevices) {
                 items.add(new DeviceTypeItem(VIEW_TYPE_OFFLINE, device));
             }
         } else {
@@ -384,7 +384,7 @@ public class DeviceListAdapter extends BaseAdapter {
         }
         items.add(new HeaderTypeItem("未绑定设备"));
         if (unBindDevices.size() > 0) {
-            for (GizWifiDevice device : unBindDevices) {
+            for (XPGWifiDevice device : unBindDevices) {
                 items.add(new DeviceTypeItem(VIEW_TYPE_UNBIND, device));
             }
         } else {
@@ -399,12 +399,12 @@ public class DeviceListAdapter extends BaseAdapter {
 //     * @param devices the devices
 //     * @return the list
 //     */
-//    private List<TypeItem> generateItems(List<GizWifiDevice> devices) {
+//    private List<TypeItem> generateItems(List<XPGWifiDevice> devices) {
 //        List<TypeItem> items = new ArrayList<TypeItem>();
 //        int size = devices == null ? 0 : devices.size();
 //        String currLabel;
 //        String preLabel = "{";
-//        GizWifiDevice device;
+//        XPGWifiDevice device;
 //        for (int i = 0; i < size; i++) {
 //            device = devices.get(i);
 //            if (device.isBind(setManager.getUid()) && device.isLAN()) {
@@ -446,7 +446,7 @@ public class DeviceListAdapter extends BaseAdapter {
      *
      * @param devices the devices
      */
-    public void changeDatas(List<GizWifiDevice> devices) {
+    public void changeDatas(List<XPGWifiDevice> devices) {
         lanDevices.clear();
         wanDevices.clear();
         offlineDevices.clear();
@@ -454,9 +454,9 @@ public class DeviceListAdapter extends BaseAdapter {
 //		if (currentDevices != null && currentDevices.size() > 0) {
 //			currentDevices.clear();
 //		} else {
-//			currentDevices = new ArrayList<GizWifiDevice>();
+//			currentDevices = new ArrayList<XPGWifiDevice>();
 //		}
-        for (GizWifiDevice device : devices) {
+        for (XPGWifiDevice device : devices) {
 
             if (device.isLAN()) {
                 if (device.isBind(setManager.getUid())) {
@@ -534,13 +534,13 @@ public class DeviceListAdapter extends BaseAdapter {
      * @param position the position
      * @return the device by position
      */
-    public GizWifiDevice getDeviceByPosition(int position) {
+    public XPGWifiDevice getDeviceByPosition(int position) {
         if (items.get(position).itemType == VIEW_TYPE_HEADER||items.get(position).itemType == VIEW_TYPE_EMPTY) {
             return null;
         } else {
             DeviceTypeItem deviceTypeItem = (DeviceTypeItem) items
                     .get(position);
-            return deviceTypeItem.GizWifiDevice;
+            return deviceTypeItem.XPGWifiDevice;
         }
     }
 
@@ -590,7 +590,7 @@ public class DeviceListAdapter extends BaseAdapter {
                     .valueOf(((HeaderTypeItem) item).label));
         } else if (viewHolder instanceof DeviceViewHolder) {
             onBindDeviceItem((DeviceViewHolder) viewHolder,
-                    ((DeviceTypeItem) item).GizWifiDevice);
+                    ((DeviceTypeItem) item).XPGWifiDevice);
         }
         return convertView;
     }
@@ -603,7 +603,7 @@ public class DeviceListAdapter extends BaseAdapter {
      * @param device     the device
      */
     private void onBindDeviceItem(DeviceViewHolder viewHolder,
-                                  GizWifiDevice device) {
+                                  XPGWifiDevice device) {
     	String DeviceName="";
     	if(StringUtils.isEmpty(device.getRemark())){
     		String macAddress=device.getMacAddress();

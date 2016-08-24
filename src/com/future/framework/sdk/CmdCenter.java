@@ -1,7 +1,7 @@
 /**
- * Project Name:GizSdkV4AppBase
+ * Project Name:xpgSdkV4AppBase
  * File Name:CmdCenter.java
- * Package Name:com.gizwits.framework.sdk
+ * Package Name:com.xpgwits.framework.sdk
  * Date:2015-1-27 14:47:19
  * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
@@ -30,9 +30,10 @@ import com.future.framework.config.Configs;
 import com.future.framework.config.JsonKeys;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.api.GizWifiSDK;
-import com.gizwits.gizwifisdk.enumration.GizWifiGAgentType;
-import com.gizwits.gizwifisdk.enumration.XPGWifiConfigureMode;
-import com.gizwits.gizwifisdk.enumration.XPGWifiGAgentType;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
+import com.xtremeprog.xpgconnect.XPGWifiSDK;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiConfigureMode;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiGAgentType;
 
 // TODO: Auto-generated Javadoc
 
@@ -49,9 +50,11 @@ public class CmdCenter {
 	private static final String TAG = "CmdCenter";
 
 	/**
-	 * The Giz wifi sdk.
+	 * The xpg wifi sdk.
 	 */
-	private static GizWifiSDK GizWifiGCC;
+	private static XPGWifiSDK xpgWifiGCC;
+	
+	private static GizWifiSDK gizWifiGCC;
 
 	/**
 	 * The m center.
@@ -98,17 +101,22 @@ public class CmdCenter {
 	private void init(Context c) {
 		mSettingManager = new SettingManager(c);
 
-		GizWifiGCC = GizWifiSDK.sharedInstance();
+		xpgWifiGCC = XPGWifiSDK.sharedInstance();
+		gizWifiGCC = GizWifiSDK.sharedInstance();
 
 	}
 
 	/**
-	 * Gets the Giz wifi sdk.
+	 * Gets the xpg wifi sdk.
 	 * 
-	 * @return the Giz wifi sdk
+	 * @return the xpg wifi sdk
 	 */
-	public GizWifiSDK getGizWifiSDK() {
-		return GizWifiGCC;
+	public XPGWifiSDK getxpgWifiSDK() {
+		return xpgWifiGCC;
+	}
+	
+	public GizWifiSDK getgizWifiSDK() {
+		return gizWifiGCC;
 	}
 
 	// =================================================================
@@ -128,7 +136,8 @@ public class CmdCenter {
 	 *            注册密码
 	 */
 	public void cRegisterPhoneUser(String phone, String code, String password) {
-		GizWifiGCC.registerUserByPhoneAndCode(phone, password, code);
+		
+		xpgWifiGCC.registerUserByPhoneAndCode(phone, password, code);
 	}
 
 	/**
@@ -140,7 +149,7 @@ public class CmdCenter {
 	 *            the password
 	 */
 	public void cRegisterMailUser(String mailAddr, String password) {
-		GizWifiGCC.registerUserByEmail(mailAddr, password);
+		xpgWifiGCC.registerUserByEmail(mailAddr, password);
 	}
 
 	/**
@@ -149,7 +158,7 @@ public class CmdCenter {
 	 * 如果一开始不需要直接注册账号，则需要进行匿名登录.
 	 */
 	public void cLoginAnonymousUser() {
-		GizWifiGCC.userLoginAnonymous();
+		xpgWifiGCC.userLoginAnonymous();
 	}
 
 	/**
@@ -157,7 +166,7 @@ public class CmdCenter {
 	 */
 	public void cLogout() {
 		Log.e(TAG, "cLogout:uesrid=" + mSettingManager.getUid());
-		GizWifiGCC.userLogout(mSettingManager.getUid());
+		xpgWifiGCC.userLogout(mSettingManager.getUid());
 	}
 
 	/**
@@ -169,7 +178,7 @@ public class CmdCenter {
 	 *            密码
 	 */
 	public void cLogin(String name, String psw) {
-		GizWifiGCC.userLoginWithUserName(name, psw);
+		xpgWifiGCC.userLoginWithUserName(name, psw);
 	}
 
 	/**
@@ -183,7 +192,7 @@ public class CmdCenter {
 	 *            the new password
 	 */
 	public void cChangeUserPasswordWithCode(String phone, String code, String newPassword) {
-		GizWifiGCC.changeUserPasswordByCode(phone, code, newPassword);
+		xpgWifiGCC.changeUserPasswordByCode(phone, code, newPassword);
 	}
 
 	/**
@@ -197,7 +206,7 @@ public class CmdCenter {
 	 *            新密码
 	 */
 	public void cChangeUserPassword(String token, String oldPsw, String newPsw) {
-		GizWifiGCC.changeUserPassword(token, oldPsw, newPsw);
+		xpgWifiGCC.changeUserPassword(token, oldPsw, newPsw);
 	}
 
 	/**
@@ -207,7 +216,7 @@ public class CmdCenter {
 	 *            邮箱地址
 	 */
 	public void cChangePassworfByEmail(String email) {
-		GizWifiGCC.changeUserPasswordByEmail(email);
+		xpgWifiGCC.changeUserPasswordByEmail(email);
 	}
 
 	/**
@@ -217,8 +226,8 @@ public class CmdCenter {
 	 *            手机号
 	 */
 	public void cRequestSendVerifyCode(String token, String captchaId, String captchaCode, String phone) {
-		// GizWifiGCC.requestSendVerifyCode(phone);
-		GizWifiGCC.requestSendPhoneSMSCode(token, captchaId, captchaCode, phone);
+		// xpgWifiGCC.requestSendVerifyCode(phone);
+		xpgWifiGCC.requestSendPhoneSMSCode(token, captchaId, captchaCode, phone);
 	}
 
 	/**
@@ -231,10 +240,10 @@ public class CmdCenter {
 	 */
 	public void cSetAirLink(String wifi, String password, List<XPGWifiGAgentType> types) {
 		/*
-		 * GizWifiGCC.setDeviceWifi(wifi, password,
-		 * GizWifiConfigureMode.GizWifiConfigureModeAirLink, 60);
+		 * xpgWifiGCC.setDeviceWifi(wifi, password,
+		 * xpgWifiConfigureMode.xpgWifiConfigureModeAirLink, 60);
 		 */
-		GizWifiGCC.setDeviceWifi(wifi, password, XPGWifiConfigureMode.XPGWifiConfigureModeAirLink, null, 60, types);
+		xpgWifiGCC.setDeviceWifi(wifi, password, XPGWifiConfigureMode.XPGWifiConfigureModeAirLink, null, 60, types);
 	}
 
 	/**
@@ -247,10 +256,10 @@ public class CmdCenter {
 	 */
 	public void cSetSoftAp(String wifi, String password, String ssidAP) {
 		/*
-		 * GizWifiGCC.setDeviceWifi(wifi, password,
-		 * GizWifiConfigureMode.GizWifiConfigureModeSoftAP, 30);
+		 * xpgWifiGCC.setDeviceWifi(wifi, password,
+		 * xpgWifiConfigureMode.xpgWifiConfigureModeSoftAP, 30);
 		 */
-		GizWifiGCC.setDeviceWifi(wifi, password, XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, ssidAP, 60, null);
+		xpgWifiGCC.setDeviceWifi(wifi, password, XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, ssidAP, 60, null);
 	}
 
 	/**
@@ -264,8 +273,8 @@ public class CmdCenter {
 	public void cGetBoundDevices(String uid, String token) {
 		List<String> product_key = new ArrayList<String>();
 		product_key.add(Configs.PRODUCT_KEY);
-		GizWifiGCC.getBoundDevices(uid, token, product_key);
-		// GizWifiSdk.getBoundDevices(uid, token);
+		xpgWifiGCC.getBoundDevices(uid, token, product_key);
+		// xpgWifiSdk.getBoundDevices(uid, token);
 	}
 
 	/**
@@ -283,8 +292,8 @@ public class CmdCenter {
 	 *            备注
 	 */
 	public void cBindDevice(String uid, String token, String did, String passcode, String remark) {
-
-		GizWifiGCC.bindDevice(uid, token, did, passcode, remark);
+		Log.e("bindDevice", uid+"---"+token+"---"+did+"---"+passcode+"---"+remark);
+		xpgWifiGCC.bindDevice(uid, token, did, passcode, remark);
 	}
 
 	// =================================================================
@@ -296,14 +305,14 @@ public class CmdCenter {
 	/**
 	 * 发送指令.
 	 *
-	 * @param GizWifiDevice
-	 *            the Giz wifi device
+	 * @param XPGWifiDevice
+	 *            the xpg wifi device
 	 * @param key
 	 *            the key
 	 * @param value
 	 *            the value
 	 */
-	public void cWrite(GizWifiDevice GizWifiDevice, String key, Object value) {
+	public void cWrite(XPGWifiDevice XPGWifiDevice, String key, Object value) {
 
 		try {
 			final JSONObject jsonsend = new JSONObject();
@@ -312,7 +321,7 @@ public class CmdCenter {
 			jsonparam.put(key, value);
 			jsonsend.put(JsonKeys.KEY_ACTION, jsonparam);
 			Log.i("sendjson", jsonsend.toString());
-			GizWifiDevice.write(jsonsend.toString());
+			XPGWifiDevice.write(jsonsend.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -322,27 +331,27 @@ public class CmdCenter {
 	/**
 	 * 获取设备状态.
 	 *
-	 * @param GizWifiDevice
-	 *            the Giz wifi device
+	 * @param XPGWifiDevice
+	 *            the xpg wifi device
 	 */
-	public void cGetStatus(GizWifiDevice GizWifiDevice) {
+	public void cGetStatus(XPGWifiDevice XPGWifiDevice) {
 		JSONObject json = new JSONObject();
 		try {
 			json.put("cmd", 2);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		GizWifiDevice.write(json.toString());
+		XPGWifiDevice.write(json.toString());
 	}
 
 	/**
 	 * 断开连接.
 	 * 
-	 * @param GizWifiDevice
-	 *            the Giz wifi device
+	 * @param XPGWifiDevice
+	 *            the xpg wifi device
 	 */
-	public void cDisconnect(GizWifiDevice GizWifiDevice) {
-		GizWifiDevice.disconnect();
+	public void cDisconnect(XPGWifiDevice XPGWifiDevice) {
+		XPGWifiDevice.disconnect();
 	}
 
 	/**
@@ -358,7 +367,7 @@ public class CmdCenter {
 	 *            the pass code
 	 */
 	public void cUnbindDevice(String uid, String token, String did, String passCode) {
-		GizWifiGCC.unbindDevice(uid, token, did, passCode);
+		xpgWifiGCC.unbindDevice(uid, token, did, passCode);
 	}
 
 	/**
@@ -376,9 +385,10 @@ public class CmdCenter {
 	 *            the remark
 	 */
 	public void cUpdateRemark(String uid, String token, String did, String passCode, String remark) {
-		GizWifiGCC.bindDevice(uid, token, did, passCode, remark);
+		Log.e("bindDevice", uid+"---"+token+"---"+did+"---"+passCode+"---"+remark);
+		xpgWifiGCC.bindDevice(uid, token, did, passCode, remark);
 	}
-
+	
 	// =================================================================
 	//
 	// 智能云净化器控制相关
@@ -387,120 +397,120 @@ public class CmdCenter {
 	/**
 	 * 净化器开关
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cSwitchOn(final GizWifiDevice GizWifiDevice, boolean isOn) {
-		cWrite(GizWifiDevice, JsonKeys.ON_OFF, isOn);
+	public void cSwitchOn(final XPGWifiDevice XPGWifiDevice, boolean isOn) {
+		cWrite(XPGWifiDevice, JsonKeys.ON_OFF, isOn);
 	}
 
 	/**
 	 * 倒计时开机
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cCountDownOn(GizWifiDevice GizWifiDevice, int min) {
-		cWrite(GizWifiDevice, JsonKeys.TIME_ON, min);
+	public void cCountDownOn(XPGWifiDevice XPGWifiDevice, int min) {
+		cWrite(XPGWifiDevice, JsonKeys.TIME_ON, min);
 	}
 
 	/**
 	 * 倒计时关机
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cCountDownOff(GizWifiDevice GizWifiDevice, int min) {
-		cWrite(GizWifiDevice, JsonKeys.TIME_OFF, min);
+	public void cCountDownOff(XPGWifiDevice XPGWifiDevice, int min) {
+		cWrite(XPGWifiDevice, JsonKeys.TIME_OFF, min);
 	}
 
 	/**
 	 * 风速
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cSetSpeed(GizWifiDevice GizWifiDevice, int lv) {
-		cWrite(GizWifiDevice, JsonKeys.Mode, lv);
+	public void cSetSpeed(XPGWifiDevice XPGWifiDevice, int lv) {
+		cWrite(XPGWifiDevice, JsonKeys.Mode, lv);
 	}
 
 	/**
 	 * 等离子开关
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cSwitchPlasma(GizWifiDevice GizWifiDevice, boolean isOn) {
-		cWrite(GizWifiDevice, JsonKeys.Plasma, isOn);
+	public void cSwitchPlasma(XPGWifiDevice XPGWifiDevice, boolean isOn) {
+		cWrite(XPGWifiDevice, JsonKeys.Plasma, isOn);
 	}
 
 	/**
 	 * 空气质量指示灯(修改为空气阀门)
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cTap(GizWifiDevice GizWifiDevice, boolean isOn) {
-		cWrite(GizWifiDevice, JsonKeys.TAP, isOn);
+	public void cTap(XPGWifiDevice XPGWifiDevice, boolean isOn) {
+		cWrite(XPGWifiDevice, JsonKeys.TAP, isOn);
 	}
 
 	/**
 	 * 儿童安全锁
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cChildLock(GizWifiDevice GizWifiDevice, boolean isOn) {
-		cWrite(GizWifiDevice, JsonKeys.Child_Lock, isOn);
-		getStatus(GizWifiDevice);
+	public void cChildLock(XPGWifiDevice XPGWifiDevice, boolean isOn) {
+		cWrite(XPGWifiDevice, JsonKeys.Child_Lock, isOn);
+		getStatus(XPGWifiDevice);
 	}
 
 	/**
 	 * 重置滤网寿命
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cResetLife(GizWifiDevice GizWifiDevice) {
-		cWrite(GizWifiDevice, JsonKeys.Filter_Life, 100);
+	public void cResetLife(XPGWifiDevice XPGWifiDevice) {
+		cWrite(XPGWifiDevice, JsonKeys.Filter_Life, 100);
 	}
 	
 	/**
 	 * 重置滤网寿命
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cResetLifeSec(GizWifiDevice GizWifiDevice) {
-		cWrite(GizWifiDevice, JsonKeys.Filter_Life2, 100);
+	public void cResetLifeSec(XPGWifiDevice XPGWifiDevice) {
+		cWrite(XPGWifiDevice, JsonKeys.Filter_Life2, 100);
 	}
 
 	/**
 	 * 空气检测灵敏度
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 * @param isOn
 	 */
-	public void cAirSensitivity(GizWifiDevice GizWifiDevice, int lv) {
-		cWrite(GizWifiDevice, JsonKeys.Air_Sensitivity, lv);
+	public void cAirSensitivity(XPGWifiDevice XPGWifiDevice, int lv) {
+		cWrite(XPGWifiDevice, JsonKeys.Air_Sensitivity, lv);
 	}
 	
-	public void cDustOutdoor(GizWifiDevice GizWifiDevice, int dust) {
-		cWrite(GizWifiDevice, JsonKeys.Dust_Outdoor, dust);
+	public void cDustOutdoor(XPGWifiDevice XPGWifiDevice, int dust) {
+		cWrite(XPGWifiDevice, JsonKeys.Dust_Outdoor, dust);
 	}
 
 	/**
 	 * 延时查询数据
 	 * 
-	 * @param GizWifiDevice
+	 * @param XPGWifiDevice
 	 */
-	public void getStatus(final GizWifiDevice GizWifiDevice) {
+	public void getStatus(final XPGWifiDevice XPGWifiDevice) {
 		// try {
 		// Thread.sleep(100);
 		// } catch (InterruptedException e) {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
-		cGetStatus(GizWifiDevice);
+		cGetStatus(XPGWifiDevice);
 	}
 }

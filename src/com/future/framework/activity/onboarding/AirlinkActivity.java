@@ -35,12 +35,11 @@ import android.widget.TextView;
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.device.DeviceListActivity;
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
-import com.gizwits.gizwifisdk.enumration.GizWifiGAgentType;
-import com.gizwits.gizwifisdk.enumration.XPGWifiGAgentType;
 import com.xpg.common.system.IntentUtils;
 import com.xpg.common.useful.StringUtils;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiGAgentType;
 
 /**
  * ClassName: Class AirlinkActivity. <br/>
@@ -336,7 +335,7 @@ public class AirlinkActivity extends BaseActivity implements OnClickListener {
 	 * com.xtremeprog.xpgconnect.XPGWifiDevice)
 	 */
 	@Override
-	protected void didSetDeviceWifi(int error, GizWifiDevice device) {
+	protected void didSetDeviceWifi(int error, XPGWifiDevice device) {
 		if (error == 0) {
 			handler.sendEmptyMessage(handler_key.CONFIG_SUCCESS.ordinal());
 		} else {

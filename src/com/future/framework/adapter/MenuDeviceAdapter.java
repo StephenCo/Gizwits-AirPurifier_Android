@@ -14,7 +14,7 @@ import com.future.airpurifier.R;
 import com.future.framework.config.Configs;
 import com.future.framework.utils.DensityUtil;
 import com.future.framework.utils.StringUtils;
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 /**
  * 
@@ -36,7 +36,7 @@ public class MenuDeviceAdapter extends BaseAdapter {
 	private Context ctx;
 
 	/** The wifidevicelist. */
-	private List<GizWifiDevice> devicelist ;
+	private List<XPGWifiDevice> devicelist ;
 
 	/**
 	 * Gets the choosed pos.
@@ -66,7 +66,7 @@ public class MenuDeviceAdapter extends BaseAdapter {
 	 * @param objects
 	 *            the objects
 	 */
-	public MenuDeviceAdapter(Context context, List<GizWifiDevice> objects) {
+	public MenuDeviceAdapter(Context context, List<XPGWifiDevice> objects) {
 		ctx = context;
 		inflater = LayoutInflater.from(context);
 		devicelist=objects;
@@ -85,7 +85,7 @@ public class MenuDeviceAdapter extends BaseAdapter {
 				android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, px));
 
 		ViewHolder holder = null;
-		GizWifiDevice device = getItem(position);
+		XPGWifiDevice device = getItem(position);
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.slibbar_item, null);
 			holder = new ViewHolder();
@@ -154,7 +154,7 @@ public class MenuDeviceAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public GizWifiDevice getItem(int position) {
+	public XPGWifiDevice getItem(int position) {
 		return devicelist.get(position);
 	}
 

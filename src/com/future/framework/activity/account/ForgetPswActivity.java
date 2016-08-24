@@ -47,14 +47,13 @@ import android.widget.ToggleButton;
 
 import com.future.airpurifier.R;
 import com.future.framework.activity.BaseActivity;
-import com.future.framework.activity.account.ForgetPswActivity.load_image;
 import com.future.framework.config.Configs;
 import com.future.framework.config.GizwitsErrorMsg;
 import com.future.framework.widget.MyInputFilter;
-import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.xpg.common.useful.NetworkUtils;
 import com.xpg.common.useful.StringUtils;
 import com.xpg.ui.utils.ToastUtils;
+import com.xtremeprog.xpgconnect.XPGWifiErrorCode;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
 /**
@@ -612,7 +611,7 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
 //	}
 	
 	@Override
-	protected void didGetCaptchaCode(GizWifiErrorCode result, String token,
+	protected void didGetCaptchaCode(int result, String token,
 			String captchaId, String captchaURL) {
 		// TODO Auto-generated method stub
 		Log.e("AppTest",
@@ -661,24 +660,43 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
 		}
 
 	}
-
-	protected void didRequestSendPhoneSMSCode(int result, java.lang.String errorMessage) {
-		Log.e("AppTest", result + ", " + errorMessage);
+	
+	@Override
+	protected void didRequestSendPhoneSMSCode(int result) {
+		// TODO Auto-generated method stub
 		if (result == 0) {// 发送成功
 			Message msg = new Message();
 			msg.what = handler_key.TOAST.ordinal();
 			msg.obj = "Send Succeessful";
 			handler.sendMessage(msg);
 			handler.sendEmptyMessage(handler_key.CHANGE_UI.ordinal());
-
+	
 		} else {// 发送失败
 			Message msg = new Message();
 			msg.what = handler_key.TOAST.ordinal();
-			msg.obj = errorMessage;
+			msg.obj = GizwitsErrorMsg.getEqual(result).getCHNDescript();;
 			handler.sendMessage(msg);
 			handler.sendEmptyMessage(handler_key.CaptchaCode.ordinal());
 		}
 	}
+
+//	protected void didRequestSendPhoneSMSCode(int result, java.lang.String errorMessage) {
+//		Log.e("AppTest", result + ", " + errorMessage);
+//		if (result == 0) {// 发送成功
+//			Message msg = new Message();
+//			msg.what = handler_key.TOAST.ordinal();
+//			msg.obj = "Send Succeessful";
+//			handler.sendMessage(msg);
+//			handler.sendEmptyMessage(handler_key.CHANGE_UI.ordinal());
+//
+//		} else {// 发送失败
+//			Message msg = new Message();
+//			msg.what = handler_key.TOAST.ordinal();
+//			msg.obj = errorMessage;
+//			handler.sendMessage(msg);
+//			handler.sendEmptyMessage(handler_key.CaptchaCode.ordinal());
+//		}
+//	}
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -51,10 +52,9 @@ import com.future.framework.activity.BaseActivity;
 import com.future.framework.activity.onboarding.SearchDeviceActivity;
 import com.future.framework.config.Configs;
 import com.future.framework.config.GizwitsErrorMsg;
+import com.future.framework.utils.StringUtils;
 import com.future.framework.widget.MyInputFilter;
-import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.xpg.common.useful.NetworkUtils;
-import com.xpg.common.useful.StringUtils;
 import com.xpg.ui.utils.ToastUtils;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
@@ -553,7 +553,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void didRegisterUser(int error, String uid, String token) {
 		Log.i("error message uid token", error + " " + uid + " " + token);
-		if (!uid.equals("") && !token.equals("")) {// 注册成功
+		if (!StringUtils.isEmpty(uid) && !StringUtils.isEmpty(token)) {// 注册成功
 			Message msg = new Message();
 			msg.what = handler_key.REG_SUCCESS.ordinal();
 			msg.obj = "注册成功";
@@ -620,11 +620,11 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 //	}
 	
 	@Override
-	protected void didGetCaptchaCode(GizWifiErrorCode result, String token,
+	protected void didGetCaptchaCode(int result, String token,
 			String captchaId, String captchaURL) {
 		// TODO Auto-generated method stub
 		Log.e("AppTest",
-				"图片验证码回调" + result.name() + ", " + token + ", " + captchaId + ", " + captchaURL);
+				"图片验证码回调" + ", " + token + ", " + captchaId + ", " + captchaURL);
 		tokenString = token;
 		captchaidString = captchaId;
 		captcthishaURL_String = captchaURL;

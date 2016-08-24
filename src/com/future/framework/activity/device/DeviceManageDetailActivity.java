@@ -1,5 +1,5 @@
 /**
- * Project Name:GizSdkV4AppBase
+ * Project Name:XPGSdkV4AppBase
  * File Name:DeviceManageDetailActivity.java
  * Package Name:com.wits.framework.activity.device
  * Date:2015-1-27 14:45:23
@@ -37,9 +37,9 @@ import com.future.framework.activity.BaseActivity;
 import com.future.framework.config.GizwitsErrorMsg;
 import com.future.framework.utils.DialogManager;
 import com.future.framework.utils.StringUtils;
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.xpg.common.useful.NetworkUtils;
 import com.xpg.ui.utils.ToastUtils;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 //TODO: Auto-generated Javadoc
 /**
@@ -78,7 +78,7 @@ public class DeviceManageDetailActivity extends BaseActivity implements
 	private Button btnDelDevice;
 
 	/** 当前设备的实例 */
-	private GizWifiDevice GizWifiDevice;
+	private XPGWifiDevice XPGWifiDevice;
 
 	/** 确定是否解绑的对话框 */
 	private Dialog unbindDialog;
@@ -184,8 +184,8 @@ public class DeviceManageDetailActivity extends BaseActivity implements
 		if (getIntent() != null) {
 			String mac = getIntent().getStringExtra("mac");
 			String did = getIntent().getStringExtra("did");
-			GizWifiDevice = findDeviceByMac(mac, did);
-			GizWifiDevice.setListener(deviceListener);
+			XPGWifiDevice = findDeviceByMac(mac, did);
+			XPGWifiDevice.setListener(deviceListener);
 		}
 
 	}
@@ -205,13 +205,13 @@ public class DeviceManageDetailActivity extends BaseActivity implements
 		unbindDialog = DialogManager.getUnbindDialog(this, this);
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setCancelable(false);
-		if (GizWifiDevice != null) {
-			if(StringUtils.isEmpty(GizWifiDevice.getRemark())){
-				String macAddress=GizWifiDevice.getMacAddress();
+		if (XPGWifiDevice != null) {
+			if(StringUtils.isEmpty(XPGWifiDevice.getRemark())){
+				String macAddress=XPGWifiDevice.getMacAddress();
 				int size=macAddress.length();
-				etName.setText(GizWifiDevice.getProductName() + macAddress.substring(size-4, size));
+				etName.setText(XPGWifiDevice.getProductName() + macAddress.substring(size-4, size));
 			}else{
-				etName.setText(GizWifiDevice.getRemark());
+				etName.setText(XPGWifiDevice.getRemark());
 			}
 		}
 	}
@@ -249,7 +249,7 @@ public class DeviceManageDetailActivity extends BaseActivity implements
 				progressDialog.setMessage("修改中，请稍候...");
 				DialogManager.showDialog(this, progressDialog);
 				mCenter.cUpdateRemark(setmanager.getUid(), setmanager
-						.getToken(), GizWifiDevice.getDid(), GizWifiDevice
+						.getToken(), XPGWifiDevice.getDid(), XPGWifiDevice
 						.getPasscode(), etName.getText().toString());
 			} else {
 				ToastUtils.showShort(DeviceManageDetailActivity.this,
@@ -265,7 +265,7 @@ public class DeviceManageDetailActivity extends BaseActivity implements
 			progressDialog.setMessage("删除中，请稍候...");
 			DialogManager.showDialog(this, progressDialog);
 			mCenter.cUnbindDevice(setmanager.getUid(), setmanager.getToken(),
-					GizWifiDevice.getDid(), GizWifiDevice.getPasscode());
+					XPGWifiDevice.getDid(), XPGWifiDevice.getPasscode());
 			break;
 		}
 
@@ -317,7 +317,7 @@ public class DeviceManageDetailActivity extends BaseActivity implements
 	}
 
 	@Override
-	protected void didDiscovered(int error, List<GizWifiDevice> deviceList) {
+	protected void didDiscovered(int error, List<XPGWifiDevice> deviceList) {
 		Log.d("onDiscovered", "Device count:" + deviceList.size());
 		deviceslist=deviceList;
 		Message msg = new Message();
